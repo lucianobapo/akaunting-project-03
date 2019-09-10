@@ -1,0 +1,19 @@
+{
+    "name": "Blog",
+    "alias": "blog",
+    "description": "",
+    "version": "1.0.0",
+    "category": "payment-gateway",
+    "keywords": [],
+    "active": 1,
+    "order": 0,
+    "providers": [
+        "Modules\\Blog\\Providers\\BlogServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": [],
+    "settings": []
+}
