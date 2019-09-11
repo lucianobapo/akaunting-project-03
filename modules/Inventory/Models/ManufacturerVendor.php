@@ -2,7 +2,7 @@
 
 namespace Modules\Inventory\Models;
 
-use App\Models\Model;
+use Modules\Inventory\Models\Model;
 
 class ManufacturerVendor extends Model
 {

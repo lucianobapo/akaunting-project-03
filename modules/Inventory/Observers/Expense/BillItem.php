@@ -4,8 +4,6 @@ namespace Modules\Inventory\Observers\Expense;
 
 use App\Models\Expense\BillItem as BillItemModel;
 use Modules\Inventory\Models\History as Model;
-
-use Modules\Inventory\Models\WarehouseItem;
 use Auth;
 
 class BillItem
@@ -33,15 +31,13 @@ class BillItem
 
         $warehouse_id = setting('inventory.default_warehouse');
 
-        $item_warehouse = WarehouseItem::where('item_id', $item->id)->first();
-
         Model::create([
             'company_id' => $bill_item->company_id,
             'user_id' => $user->id,
             'item_id' => $item->id,
             'type_id' => $bill_item->id,
             'type_type' => get_class($bill_item),
-            'warehouse_id' => $item_warehouse?$item_warehouse->warehouse->id:$warehouse_id,
+            'warehouse_id' => $warehouse_id,
             'quantity' => $bill_item->quantity,
         ]);
     }

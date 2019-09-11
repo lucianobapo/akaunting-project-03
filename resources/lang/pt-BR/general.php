@@ -4,11 +4,11 @@ return [
 
     'items'                 => 'Item | Itens',
     'incomes'               => 'Renda|Rendas',
-    'invoices'              => 'Fatura|Faturas',
+    'invoices'              => 'Fatura de venda|Faturas de venda',
     'revenues'              => 'Receita|Receitas',
     'customers'             => 'Cliente|Clientes',
     'expenses'              => 'Despesa|Despesas',
-    'bills'                 => 'Fatura|Faturas',
+    'bills'                 => 'Fatura de compra|Faturas de compra',
     'payments'              => 'Pagamento|Pagamento',
     'vendors'               => 'Fornecedor|Fornecedores',
     'accounts'              => 'Conta|Contas',

@@ -42,7 +42,7 @@
         fake_quantity += '  <label for="fake_quantity" class="control-label">{{ trans_choice('items.quantities', 1) }}</label>';
         fake_quantity += '  <div class="input-group">';
         fake_quantity += '      <div class="input-group-addon"><i class="fa fa-cubes"></i></div>';
-        fake_quantity += '      <input class="form-control" placeholder="{{ trans('general.form.select.field', ['field' => trans_choice('items.quantities', 1)]) }}" required="required" disabled="disabled" name="fake_quantity" type="text" value="0" id="fake_quantity">';
+        fake_quantity += '      <input class="form-control" placeholder="{{ trans('general.form.select.field', ['field' => trans_choice('items.quantities', 1)]) }}" required="required" disabled="disabled" name="fake_quantity" type="text" value="1" id="fake_quantity">';
         fake_quantity += '   </div>';
 
         $(document).ready(function(){

@@ -96,6 +96,9 @@ class Users extends Controller
             $roles = Role::all()->reject(function ($r) {
                 return !$r->hasPermission('read-customer-panel');
             });
+        } elseif(Auth::user()->hasPermission('create-auth-users')) {
+            // Don't show roles with customer permission
+            $roles = Role::all();            
         } else {
             // Don't show roles with customer permission
             $roles = Role::all()->reject(function ($r) {

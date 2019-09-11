@@ -41,7 +41,7 @@
                         </li>
 
                         <li class="list-group-item">
-                            <b>{{ trans_choice('general.categories', 1) }}</b> <a class="pull-right">{{  $item->category ? $item->category->name : trans('general.na') }}</a>
+                            <b>{{ trans_choice('general.categories', 1) }}</b> <a class="pull-right">{{ $item->category->name }}</a>
                         </li>
 
                         @if ($item->tax)

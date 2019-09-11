@@ -20,7 +20,6 @@ class Item
      */
     public function created(ItemModel $item)
     {
-        logger('created inventory item observer');
         $request = request();
 
         if (empty($request->get('track_inventory'))) {
@@ -71,7 +70,7 @@ class Item
     }
 
     /**
-     * Listen to the updated event.
+     * Listen to the created event.
      *
      * @param  Model $item
      *
@@ -83,7 +82,7 @@ class Item
 
         $request = request();
 
-        if (!$request->has('opening_stock')) {
+        if (empty($request->get('opening_stock'))) {
             return false;
         }
 
@@ -114,7 +113,7 @@ class Item
         if ($request->has('warehouse_id')) {
             $warehouse_id = $request->get('warehouse_id');
         }
-        
+
         if (!empty($inventory_item)) {
             $inventory_warehouse->update([
                 'company_id' => $item->company_id,
@@ -131,25 +130,21 @@ class Item
 
         $user = Auth::user();
 
-        $histories = History::where('item_id', $item->id)
-                        ->where('company_id', $item->company_id)
-                        //->where('type_type', get_class($item))
-                        //->where('item_id', $item->id)
-                        ->get();
+        $history = History::where('type_id', $item->id)
+                        ->where('type_type', get_class($item))
+                        ->where('item_id', $item->id)
+                        ->first();
 
-        if ($histories->count() >0) {
-            foreach($histories as $history){
-                $history->update([
-                    'company_id' => $item->company_id,
-                    'user_id' => $user->id,
-                    'item_id' => $item->id,
-                    //'type_id' => $item->id,
-                    //'type_type' => get_class($item),
-                    'warehouse_id' => $warehouse_id,
-                    //'quantity' => $request->get('opening_stock'),
-                ]);
-            }
-            
+        if ($history) {
+            $history->update([
+                'company_id' => $item->company_id,
+                'user_id' => $user->id,
+                'item_id' => $item->id,
+                'type_id' => $item->id,
+                'type_type' => get_class($item),
+                'warehouse_id' => $warehouse_id,
+                'quantity' => $request->get('opening_stock'),
+            ]);
         } else {
             History::create([
                 'company_id' => $item->company_id,
