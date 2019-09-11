@@ -5,7 +5,7 @@ Route::group([
     'prefix' => 'inventory',
     'namespace' => 'Modules\Inventory\Http\Controllers'
 ], function () {
-    //Route::get('/', 'InventoryController@index');
+    Route::get('/', 'InventoryController@index');
 
     Route::get('item-groups/autocomplete', 'ItemGroups@autocomplete')->name('item-groups.autocomplete');
     Route::get('item-groups/addItem', 'ItemGroups@addItem')->name('item-groups.add-item');
@@ -36,9 +36,9 @@ Route::group([
     Route::get('histories/export', 'Histories@export')->name('histories.export');
     Route::resource('histories', 'Histories');
 
-    //Route::get('reports/print', 'Reports@print')->name('reports.print');
-    //Route::get('reports/export', 'Reports@export')->name('reports.export');
-    //Route::resource('reports', 'Reports');
+    Route::get('reports/print', 'Reports@print')->name('reports.print');
+    Route::get('reports/export', 'Reports@export')->name('reports.export');
+    Route::resource('reports', 'Reports');
 
     Route::get('settings', 'Settings@edit')->name('inventory.settings.edit');
     Route::post('settings', 'Settings@update')->name('inventory.settings.update');
