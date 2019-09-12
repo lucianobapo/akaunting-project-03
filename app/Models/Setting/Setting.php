@@ -4,9 +4,11 @@ namespace App\Models\Setting;
 
 use App\Scopes\Company;
 use Illuminate\Database\Eloquent\Model;
+use GeneaLabs\LaravelModelCaching\Traits\Cachable;
 
 class Setting extends Model
 {
+    use Cachable;
 
     protected $table = 'settings';
 

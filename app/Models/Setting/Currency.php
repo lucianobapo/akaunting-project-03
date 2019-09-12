@@ -3,9 +3,11 @@
 namespace App\Models\Setting;
 
 use App\Models\Model;
+use GeneaLabs\LaravelModelCaching\Traits\Cachable;
 
 class Currency extends Model
 {
+    use Cachable;
 
     protected $table = 'currencies';
 

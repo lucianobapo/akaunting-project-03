@@ -71,6 +71,7 @@ class Versions
         $url = 'core/version/' . $info['akaunting'] . '/' . $info['php'] . '/' . $info['mysql'] . '/' . $info['companies'];
 
         $data['core'] = static::getLatestVersion($url);
+        if ($data['core']=='0.0.0') $data['core'] = $info['akaunting'];
 
         // Then modules
         foreach ($modules as $module) {
@@ -80,6 +81,7 @@ class Versions
             $url = 'apps/' . $alias . '/version/' . $version . '/' . $info['akaunting'];
 
             $data[$alias] = static::getLatestVersion($url);
+            if ($data[$alias]=='0.0.0') $data[$alias] = $version;
         }
 
         Cache::put('versions', $data, Date::now()->addHour(6));

@@ -27,7 +27,7 @@ return [
     'profits'               => 'Lucro|Lucros',
     'taxes'                 => 'Imposto|Impostos',
     'logos'                 => 'Logotipo | Logotipos',
-    'pictures'              => 'Imagen|Imagens',
+    'pictures'              => 'Imagem|Imagens',
     'types'                 => 'Tipo|Tipos',
     'payment_methods'       => 'Método de pagamento|Método de pagamentos',
     'compares'              => 'Receita vs Despesa|Receitas vs Despesas',

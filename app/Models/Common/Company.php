@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Kyslik\ColumnSortable\Sortable;
 use App\Traits\Media;
+use GeneaLabs\LaravelModelCaching\Traits\Cachable;
 
 class Company extends Eloquent
 {
+    use Cachable;
     use Filterable, SoftDeletes, Sortable, Media;
 
     protected $table = 'companies';

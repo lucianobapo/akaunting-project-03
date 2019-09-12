@@ -33,7 +33,7 @@ class Item extends Model
      *
      * @var array
      */
-    protected $sortable = ['name', 'category', 'quantity', 'sale_price', 'purchase_price', 'enabled'];
+    protected $sortable = ['sku', 'name', 'category', 'quantity', 'sale_price', 'purchase_price', 'enabled'];
 
     /**
      * Searchable rules.

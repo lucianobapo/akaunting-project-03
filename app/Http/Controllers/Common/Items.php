@@ -24,7 +24,7 @@ class Items extends Controller
      */
     public function index()
     {
-        $items = Item::with('category')->collect();
+        $items = Item::with('category')->sortable('sku')->collect();
 
         $categories = Category::enabled()->orderBy('name')->type('item')->pluck('name', 'id');
 

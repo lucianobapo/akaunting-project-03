@@ -13,7 +13,6 @@
         "akaunting/signed-url": "1.0.*",
         "akaunting/version": "1.0.*",
         "almasaeed2010/adminlte": "2.3.*",
-        "barryvdh/laravel-debugbar": "2.3.*",
         "barryvdh/laravel-dompdf": "0.*",
         "barryvdh/laravel-ide-helper": "2.3.*",
         "bkwld/cloner": "3.2.*",
@@ -36,11 +35,14 @@
         "santigarcor/laratrust": "4.0.*",
         "simshaun/recurr": "3.0.*",
         "sofa/eloquence": "5.4.*",
-        "tucker-eric/eloquentfilter": "1.1.*"
+        "nesbot/carbon": "1.22.*",
+        "tucker-eric/eloquentfilter": "1.1.*",
+        "genealabs/laravel-model-caching": "0.3.*"
     },
     "require-dev": {
         "fzaninotto/faker": "1.8.*",
-        "phpunit/phpunit": "5.7.*"
+        "phpunit/phpunit": "5.7.*",
+        "barryvdh/laravel-debugbar": "^2.4"
     },
     "autoload": {
         "classmap": [
