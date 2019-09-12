@@ -22,7 +22,8 @@ class Item
     {
         $request = request();
 
-        if (empty($request->get('track_inventory'))) {
+        if (!$request->has('track_inventory')) {            
+            logger('track_inventory not set');
             return false;
         }
 
@@ -82,7 +83,8 @@ class Item
 
         $request = request();
 
-        if (empty($request->get('opening_stock'))) {
+        if (!$request->has('opening_stock')) {
+            logger('opening_stock not set');
             return false;
         }
 

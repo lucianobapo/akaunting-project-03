@@ -15,7 +15,7 @@
     {{ Form::selectGroup('vendor_id', trans_choice('general.vendors', 1), 'user', $vendors, !empty($inventory_item->vendor_id) ? $inventory_item->vendor_id : 0, [], 'col-md-6 hidden') }}
 
     @if ($warehouses->count() >= 2)
-        {{ Form::selectGroup('warehouse', trans_choice('inventory::general.warehouses', 1), 'building', $warehouses, old('warehouse_id') ? old('warehouse_id') : !empty($inventory_item->warehouse_id) ? $inventory_item->warehouse_id : setting('inventory.default_warehouse'), []) }}
+        {{ Form::selectGroup('warehouse_id', trans_choice('inventory::general.warehouses', 1), 'building', $warehouses, old('warehouse_id') ? old('warehouse_id') : !empty($inventory_item->warehouse_id) ? $inventory_item->warehouse_id : setting('inventory.default_warehouse'), []) }}
     @endif
 
 @push('js')
