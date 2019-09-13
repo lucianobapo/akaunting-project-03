@@ -407,9 +407,9 @@
                     </div>
                     @stack('button_group_end')
 
-                    @if($bill->attachment)
-                    @php $file = $bill->attachment; @endphp
-                    @include('partials.media.file')
+                    @if($bill->attachments)
+                        @php $files = $bill->attachments; @endphp
+                        @include('partials.media.files')
                     @endif
                 </div>
             </div>

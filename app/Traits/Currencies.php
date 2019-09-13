@@ -12,6 +12,9 @@ trait Currencies
     {
         $default = new Currency(setting('general.default_currency', 'USD'));
 
+        if ($default->getCurrency()==$code) return $amount;
+        
+
         if ($format) {
             $money = Money::$code($amount, true)->convert($default, (double) $rate)->format();
         } else {
@@ -36,6 +39,8 @@ trait Currencies
     {
         $default = setting('general.default_currency', 'USD');
 
+        if ($default==$code) return $amount;
+
         $code = new Currency($code);
 
         if ($format) {
@@ -48,7 +53,9 @@ trait Currencies
     }
 
     public function dynamicConvert($default, $amount, $code, $rate, $format = false)
-    {
+    {        
+        if ($default==$code) return $amount;
+
         $code = new Currency($code);
 
         if ($format) {

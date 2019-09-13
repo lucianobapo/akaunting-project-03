@@ -23,7 +23,7 @@ class Bill extends Model
      *
      * @var array
      */
-    protected $appends = ['attachment', 'amount_without_tax', 'discount', 'paid'];
+    protected $appends = ['attachments', 'attachment', 'amount_without_tax', 'discount', 'paid'];
 
     protected $dates = ['deleted_at', 'billed_at', 'due_at'];
 
@@ -179,6 +179,22 @@ class Bill extends Model
         }
 
         return $this->getMedia('attachment')->last();
+    }
+
+    /**
+     * Get the current balance.
+     *
+     * @return string
+     */
+    public function getAttachmentsAttribute($value)
+    {
+        if (!empty($value) && !$this->hasMedia('attachment')) {
+            return $value;
+        } elseif (!$this->hasMedia('attachment')) {
+            return false;
+        }
+
+        return $this->getMedia('attachment');
     }
 
     /**
