@@ -265,7 +265,7 @@ class Items extends Controller
         ]);
 
         if ($type == 'invoice') {
-            $autocomplete->quantity();
+            //$autocomplete->quantity();
         }
 
         $items = $autocomplete->get();
