@@ -67,7 +67,7 @@ return [
     'delete_confirm'        => 'Confirma a exclusão :name :type?',
     'name'                  => 'Nome',
     'email'                 => 'E-mail',
-    'tax_number'            => 'Número de identificação fisca',
+    'tax_number'            => 'CPF / CNPJ',
     'phone'                 => 'Telefone',
     'address'               => 'Endereço',
     'website'               => 'Site',

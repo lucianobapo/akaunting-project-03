@@ -17,7 +17,7 @@ $options = !empty($options) ? $options : false;
         @endif
 
         <div class="mailbox-attachment-info">
-            <a href="javascript:void();" class="mailbox-attachment-name">
+            <a target=_blank href="{{ url('uploads/' . $file->id) }}" class="mailbox-attachment-name">
                 <p class="mailbox-attachment-file-name">
                     <i class="fa fa-paperclip"></i> {{ $file->basename }}
                 </p>

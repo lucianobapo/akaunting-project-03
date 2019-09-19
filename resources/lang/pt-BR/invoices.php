@@ -7,7 +7,7 @@ return [
     'total_price'           => 'Valor total',
     'due_date'              => 'Data de Vencimento',
     'order_number'          => 'Número',
-    'bill_to'               => 'Pagar para',
+    'bill_to'               => 'Faturar para',
 
     'quantity'              => 'Quantidade',
     'price'                 => 'Preço',
@@ -22,7 +22,7 @@ return [
     'add_discount'          => 'Adicionar desconto',
     'discount_desc'         => 'subtotal',
 
-    'payment_due'           => 'Pagamento vencido',
+    'payment_due'           => 'Vencimento',
     'paid'                  => 'Pago',
     'histories'             => 'Histórico',
     'payments'              => 'Pagamentos',
