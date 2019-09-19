@@ -22,7 +22,7 @@ class Item
     {
         $request = request();
 
-        if (!$request->has('track_inventory')) {            
+        if (!$request->has('track_inventory')) {
             logger('track_inventory not set');
             return false;
         }
