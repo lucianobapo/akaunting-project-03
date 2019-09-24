@@ -39,7 +39,7 @@ return [
 
     'status' => [
         'draft'             => 'Rascunho',
-        'sent'              => 'Enviar',
+        'sent'              => 'Enviado',
         'viewed'            => 'Visto',
         'approved'          => 'Aprovado',
         'partial'           => 'Parcial',
@@ -65,8 +65,9 @@ return [
     ],
 
     'notification' => [
-        'message'           => 'Você está recebendo este e-mail porque tem :amount fatura a vencer.',
-        'button'            => 'Pagar agora',
+        'message'           => 'Você está recebendo este e-mail porque foi registrado uma fatura no valor total de :amount, com vencimento em :due_at.',
+        'button'            => 'Ver Fatura',
+        'subject'              => 'Nova Fatura - :invoice_number',
     ],
 
 ];

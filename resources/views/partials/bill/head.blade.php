@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{ asset('public/css/invoice.css?v=' . version('short')) }}">
 
     <style type="text/css">
+        @php include('public/css/invoice.css') @endphp
         * {
             font-family: DejaVu Sans;
         }

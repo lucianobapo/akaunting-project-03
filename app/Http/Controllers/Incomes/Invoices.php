@@ -42,6 +42,8 @@ use Image;
 use Storage;
 use SignedUrl;
 
+use LynX39\LaraPdfMerger\Facades\PdfMerger;
+
 class Invoices extends Controller
 {
     use DateTime, Currencies, Incomes, Uploads;
@@ -82,6 +84,9 @@ class Invoices extends Controller
 
         $account_currency_code = Account::where('id', setting('general.default_account'))->pluck('currency_code')->first();
 
+        $invoice_history = InvoiceHistory::where('invoice_id', $invoice->id)
+        ->where('status_code', 'sent')->first();
+
         $customers = Customer::enabled()->orderBy('name')->pluck('name', 'id');
 
         $categories = Category::enabled()->type('income')->orderBy('name')->pluck('name', 'id');
@@ -90,7 +95,7 @@ class Invoices extends Controller
 
         $customer_share = SignedUrl::sign(route('signed.invoices', $invoice->id));
 
-        return view('incomes.invoices.show', compact('invoice', 'accounts', 'currencies', 'account_currency_code', 'customers', 'categories', 'payment_methods', 'customer_share'));
+        return view('incomes.invoices.show', compact('invoice', 'invoice_history', 'accounts', 'currencies', 'account_currency_code', 'customers', 'categories', 'payment_methods', 'customer_share'));
     }
 
     /**
@@ -346,7 +351,7 @@ class Invoices extends Controller
 
         flash(trans('invoices.messages.marked_sent'))->success();
 
-        return redirect()->back();
+        return redirect()->route('invoices.show', ['invoice' => $invoice->id]);
     }
 
     /**
@@ -364,24 +369,13 @@ class Invoices extends Controller
 
         $invoice = $this->prepareInvoice($invoice);
 
-        $view = view($invoice->template_path, compact('invoice'))->render();
-        $html = mb_convert_encoding($view, 'HTML-ENTITIES');
-
-        $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($html);
-
-        $file = storage_path('app/temp/invoice_'.time().'.pdf');
-
-        $invoice->pdf_path = $file;
-
-        // Save the PDF file into temp folder
-        $pdf->save($file);
+        $invoice = $this->preparePDFInvoice($invoice);
 
         // Notify the customer
         $invoice->customer->notify(new Notification($invoice));
 
         // Delete temp file
-        File::delete($file);
+        File::delete($invoice->pdf_path); 
 
         unset($invoice->paid);
         unset($invoice->template_path);
@@ -406,7 +400,7 @@ class Invoices extends Controller
 
         flash(trans('invoices.messages.email_sent'))->success();
 
-        return redirect()->back();
+        return redirect()->route('invoices.show', ['invoice' => $invoice->id]);
     }
 
     /**
@@ -434,19 +428,18 @@ class Invoices extends Controller
     {
         $invoice = $this->prepareInvoice($invoice);
 
-        $currency_style = true;
+        $invoice = $this->preparePDFInvoice($invoice);         
 
-        $view = view($invoice->template_path, compact('invoice', 'currency_style'))->render();
-        $html = mb_convert_encoding($view, 'HTML-ENTITIES');
+        $file_contents = file_get_contents($invoice->pdf_path);
 
-        $pdf = app('dompdf.wrapper');
-        $pdf->loadHTML($html);
+        // Delete temp file
+        File::delete($invoice->pdf_path); 
 
-        //$pdf->setPaper('A4', 'portrait');
+        return response()->make($file_contents, 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="'.$invoice->invoice_number.'.pdf"'
+        ]);    
 
-        $file_name = 'invoice_'.time().'.pdf';
-
-        return $pdf->download($file_name);
     }
 
     /**
@@ -708,5 +701,51 @@ class Invoices extends Controller
         event(new InvoicePrinting($invoice));
 
         return $invoice;
+    }
+
+    protected function preparePDFInvoice(Invoice $invoice)
+    {
+
+        $currency_style = true;
+
+        $view = view($invoice->template_path, compact('invoice', 'currency_style'))->render();
+        $html = mb_convert_encoding($view, 'HTML-ENTITIES');
+
+        $pdf = app('dompdf.wrapper');
+        $pdf->loadHTML($html);
+
+        $pdf->setPaper('A4', 'portrait');
+
+        $invoice_pdf_file = storage_path('app/temp/invoice_'.time().'.pdf');       
+
+        $pdf->save($invoice_pdf_file);
+
+        $pdfMerger = PDFMerger::init();
+
+        $pdfMerger->addPDF($invoice_pdf_file, 'all');
+
+        if($invoice->attachments)
+            foreach ($invoice->attachments as $attachment) {
+                if ($attachment->extension=='pdf') {
+                    $local_full_path = Storage::disk($attachment->disk)->path($attachment->directory.DIRECTORY_SEPARATOR.$attachment->filename.'.'.$attachment->extension);
+                    $pdfMerger->addPDF($local_full_path, 'all');  
+                }             
+            }
+
+        $pdfMerger->merge();
+
+        $merged_invoice_pdf_file = storage_path('app/temp/merged_invoice_'.time().'.pdf');        
+
+        $pdfMerger->save($merged_invoice_pdf_file);
+
+        $invoice->pdf_path = $merged_invoice_pdf_file;
+
+        File::delete($invoice_pdf_file); 
+        //$pdfMerger->save($file_name, "browser");
+        //return $pdf->stream();
+        //return $pdf->download($file_name);  
+
+        return $invoice;
+        //return $merged_invoice_pdf_file;
     }
 }

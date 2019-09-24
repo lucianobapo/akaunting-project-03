@@ -20,6 +20,7 @@ class Versions
 
         $http = new \GuzzleHttp\Client(['verify' => false]);
 
+logger('Versions.php: GuzzleHttp\Client ->get() called - '.$url);
         $json = $http->get($url, ['timeout' => 30])->getBody()->getContents();
 
         if (empty($json)) {

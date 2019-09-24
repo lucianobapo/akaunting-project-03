@@ -110,3 +110,14 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 ## License
 
 Akaunting is released under the [GPLv3 license](LICENSE.txt).
+
+
+## Updating
+
+commands:
+
+```
+# update uploads
+rsync -rvztPhe ssh /opt/easyengine/sites/akaunting.localhost.com/app/htdocs/storage/app/uploads/ luciano@45.76.164.151:/var/www/akaunting.associacaovalao.com.br/htdocs/storage/app/uploads/ 
+
+```

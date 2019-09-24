@@ -36,7 +36,8 @@
         "simshaun/recurr": "3.0.*",
         "sofa/eloquence": "5.4.*",
         "nesbot/carbon": "1.22.*",
-        "tucker-eric/eloquentfilter": "1.1.*"
+        "tucker-eric/eloquentfilter": "1.1.*",
+        "daltcore/lara-pdf-merger": "^2.0"
     },
     "require-dev": {
         "fzaninotto/faker": "1.8.*",

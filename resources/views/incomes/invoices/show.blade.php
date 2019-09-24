@@ -100,7 +100,7 @@
                                 @stack('timeline_body_send_invoice_body_button_email_end')
                             @else
                                 @stack('timeline_body_send_invoice_body_message_start')
-                                {{ trans_choice('general.statuses', 1) . ': ' . trans('invoices.messages.status.send.sent', ['date' => Date::parse($invoice->created_at)->format($date_format)]) }}
+                                {{ trans_choice('general.statuses', 1) . ': ' . trans('invoices.messages.status.send.sent', ['date' => Date::parse($invoice_history->created_at)->format($date_format)]) }}
                                 @stack('timeline_body_send_invoice_body_message_end')
                             @endif
                         </div>
@@ -334,7 +334,7 @@
                     <p class="lead">{{ trans_choice('general.notes', 2) }}</p>
 
                     <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-                        {{ $invoice->notes }}
+                        {!! nl2br(e($invoice->notes)) !!}   
                     </p>
                 @endif
                 @stack('notes_input_end')
@@ -452,9 +452,9 @@
                     </div>
                     @stack('button_group_end')
 
-                    @if($invoice->attachment)
-                    @php $file = $invoice->attachment; @endphp
-                    @include('partials.media.file')
+                    @if($invoice->attachments)
+                        @php $files = $invoice->attachments; @endphp
+                        @include('partials.media.files')
                     @endif
                 </div>
             </div>

@@ -207,6 +207,7 @@ return [
         Sofa\Eloquence\ServiceProvider::class,
         Plank\Mediable\MediableServiceProvider::class,
 
+        LynX39\LaraPdfMerger\PdfMergerServiceProvider::class,
     ],
 
     /*
@@ -277,6 +278,7 @@ return [
         'SignedUrl' => Akaunting\SignedUrl\Facade::class,
         'Version' => Akaunting\Version\Facade::class,
 
+'PdfMerger' => LynX39\LaraPdfMerger\Facades\PdfMerger::class,
     ],
 
 ];

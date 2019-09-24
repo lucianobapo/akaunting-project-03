@@ -27,6 +27,7 @@ trait SiteApi
         $data = array_merge($data, $headers);
 
         try {
+            logger('SiteApi.php: GuzzleHttp\Client ->get() called - '.$url);
             $result = $client->get($url, $data);
         } catch (RequestException $e) {
             $result = $e;
