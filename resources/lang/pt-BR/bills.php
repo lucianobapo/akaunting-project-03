@@ -7,7 +7,7 @@ return [
     'total_price'           => 'Valor Total',
     'due_date'              => 'Data de Vencimento',
     'order_number'          => 'Número',
-    'bill_from'             => 'Bill From',
+    'bill_from'             => 'Fatura de',
 
     'quantity'              => 'Quantidade',
     'price'                 => 'Preço',
