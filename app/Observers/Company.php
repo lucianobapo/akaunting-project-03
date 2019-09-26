@@ -28,6 +28,8 @@ class Company
 
         // Attach company to user
         Auth::user()->companies()->attach($company->id);
+
+        cache()->forget('companies_view_composer');
     }
 
     /**
@@ -47,6 +49,13 @@ class Company
         foreach ($tables as $table) {
             $this->deleteItems($company, $table);
         }
+
+        cache()->forget('companies_view_composer');
+    }
+
+    public function updated(Model $company)
+    {        
+        cache()->forget('companies_view_composer');
     }
 
     /**

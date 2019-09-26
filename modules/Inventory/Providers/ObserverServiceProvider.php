@@ -5,6 +5,7 @@ namespace Modules\Inventory\Providers;
 use App\Models\Common\Item;
 use App\Models\Income\InvoiceItem;
 use App\Models\Expense\BillItem;
+use Modules\Inventory\Models\History as InventoryHistory;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -25,6 +26,9 @@ class ObserverServiceProvider extends ServiceProvider
 
         // Bills
         BillItem::observe('Modules\Inventory\Observers\Expense\BillItem');
+
+        // InventoryHistory
+        InventoryHistory::observe('Modules\Inventory\Observers\InventoryHistory');
     }
 
     /**

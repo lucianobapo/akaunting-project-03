@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Common\Item as Request;
 use App\Http\Requests\Common\TotalItem as TRequest;
 use App\Models\Common\Item;
+use App\Models\Expense\BillItem;
+use App\Models\Income\InvoiceItem;
 use App\Models\Setting\Category;
 use App\Models\Setting\Currency;
 use App\Models\Setting\Tax;
@@ -15,10 +17,14 @@ use App\Utilities\ImportFile;
 use Modules\Inventory\Models\History;
 use Modules\Inventory\Models\WarehouseItem;
 use Modules\Inventory\Models\Item as ItemInventory;
+use Illuminate\Support\Facades\Cache;
+
 
 class Items extends Controller
 {
     use Uploads;
+
+    protected $cache_minutes = 60 * 24;
 
     /**
      * Display a listing of the resource.
@@ -34,6 +40,21 @@ class Items extends Controller
         return view('common.items.index', compact('items', 'categories'));
     }
 
+    protected function sanitizeHistory(){
+       $histories = Cache::remember('histories_not_track', $this->cache_minutes, function () {
+                    $inventoryItems = ItemInventory::all()->pluck('item_id')->toArray();       
+
+                    return History::select('item_id')->whereNotIn('item_id', $inventoryItems)->get();
+                });
+
+        //Remove Wrong history data for items without inventory track
+        foreach ($histories as $history) {
+            $history->delete();
+        }
+
+    }
+
+
     /**
      * Show the form for viewing the specified resource.
      *
@@ -41,9 +62,20 @@ class Items extends Controller
      */
     public function show(Item $item)
     {
+
+        $this->sanitizeHistory($item);
+
+        $invoice_count = Cache::remember('invoice_count'.$item->id, $this->cache_minutes, function () use($item) {
+            return InvoiceItem::where('item_id', $item->id)->distinct('invoice_id')->count('invoice_id');
+        });
+
+        $bill_count = Cache::remember('bill_count'.$item->id, $this->cache_minutes, function () use($item) {
+            return BillItem::where('item_id', $item->id)->distinct('bill_id')->count('bill_id');
+        });
+
         $counts = [
-            'invoices' => 100,
-            'bills' => 10,
+            'invoices' => $invoice_count,
+            'bills' => $bill_count,
         ];
 
         $amounts = [
@@ -52,11 +84,22 @@ class Items extends Controller
             'overdue' => 0,
         ];
 
-        $transactions = [];
+        $transactions = [];      
 
-        $item_inventory = ItemInventory::where('item_id', $item->id)->first();
-        $item_warehouse = WarehouseItem::where('item_id', $item->id)->first();
-        $item_histories = History::where('item_id', $item->id)->get();
+        $item_inventory = cache()->remember('item_inventory'.$item->id, $this->cache_minutes, function () use($item) {
+            $return = ItemInventory::where('item_id', $item->id)->first();
+            return is_null($return)?[]:$return;
+        });
+
+        $item_warehouse = Cache::remember('item_warehouse'.$item->id, $this->cache_minutes, function () use($item) {
+            $return = WarehouseItem::where('item_id', $item->id)->first();
+            return is_null($return)?[]:$return;
+        });
+
+        $item_histories = Cache::remember('item_histories'.$item->id, $this->cache_minutes, function () use($item) {
+            $return = History::where('item_id', $item->id)->get();
+            return is_null($return)?[]:$return;
+        });
 
         return view('inventory::items.show', compact('item', 'item_inventory', 'item_warehouse', 'item_histories', 'counts', 'amounts', 'transactions'));
     }

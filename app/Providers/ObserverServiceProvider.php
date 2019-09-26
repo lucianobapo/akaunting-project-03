@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Models\Common\Company;
+use App\Models\Setting\Currency;
+use App\Models\Module\Module;
 use Illuminate\Support\ServiceProvider;
 
 class ObserverServiceProvider extends ServiceProvider
@@ -16,6 +18,9 @@ class ObserverServiceProvider extends ServiceProvider
     {
         // Observe company actions
         Company::observe('App\Observers\Company');
+        
+        Currency::observe('App\Observers\Currency');
+        Module::observe('App\Observers\Module');
     }
 
     /**

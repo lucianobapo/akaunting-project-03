@@ -6,10 +6,12 @@ use App\Events\AdminMenuCreated;
 use Menu;
 use Nwidart\Menus\MenuItem;
 use App\Models\Module\Module;
+use Illuminate\Support\Facades\Cache;
 
 class AdminMenu
 {
     private $menuItems;
+    protected $cache_minutes = 60 * 24;
 
     /**
      * The constructor.
@@ -30,7 +32,9 @@ class AdminMenu
      */
     public function handle(AdminMenuCreated $event)
     {
-        $modules = Module::all()->pluck('alias')->toArray();
+        $modules = Cache::remember('modules_pluck_alias', $this->cache_minutes, function () {
+            return Module::all()->pluck('alias')->toArray();
+        });
 
         if (!in_array('inventory', $modules)) {
             return false;

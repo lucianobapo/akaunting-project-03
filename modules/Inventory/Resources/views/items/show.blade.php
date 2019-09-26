@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-3">
             <!-- Stats -->
-            <div class="box box-success hidden">
+            <div class="box box-success">
                 <div class="box-body box-profile">
                     <ul class="list-group list-group-unbordered">
                         <li class="list-group-item" style="border-top: 0;">
@@ -114,7 +114,7 @@
         <!-- /.col -->
 
         <div class="col-md-9">
-            <div class="row hidden">
+            <div class="row">
                 <div class="col-md-4 col-sm-8 col-xs-12">
                     <div class="info-box">
                         <span class="info-box-icon bg-green"><i class="fa fa-money"></i></span>
