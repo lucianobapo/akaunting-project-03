@@ -37,7 +37,8 @@
         "sofa/eloquence": "5.4.*",
         "nesbot/carbon": "1.22.*",
         "tucker-eric/eloquentfilter": "1.1.*",
-        "daltcore/lara-pdf-merger": "^2.0"
+        "daltcore/lara-pdf-merger": "^2.0",
+        "predis/predis": "^1.1"
     },
     "require-dev": {
         "fzaninotto/faker": "1.8.*",
