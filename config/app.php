@@ -208,6 +208,8 @@ return [
         Plank\Mediable\MediableServiceProvider::class,
 
         LynX39\LaraPdfMerger\PdfMergerServiceProvider::class,
+
+        ErpNET\Permissions\Providers\ErpnetPermissionsServiceProvider::class,
     ],
 
     /*
