@@ -32,6 +32,7 @@ use App\Traits\Uploads;
 use App\Utilities\Import;
 use App\Utilities\ImportFile;
 use App\Utilities\Modules;
+use App\Utilities\CacheUtility;
 use Date;
 use File;
 use Image;
@@ -46,18 +47,26 @@ class Bills extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(CacheUtility $cache)
     {
-        $bills = Bill::with(['vendor', 'status', 'items', 'payments', 'histories'])->collect(['billed_at'=> 'desc']);
+        $bills = $cache->remember('bills_with_vendor_status', function () {
+            return Bill::with(['vendor', 'status', 'items', 'payments', 'histories'])->collect(['due_at'=> 'desc']);
+        }, [Bill::class]);
 
-        $vendors = collect(Vendor::enabled()->orderBy('name')->pluck('name', 'id'));
+        $vendors = $cache->remember('vendors_enabled', function () {
+            return collect(Vendor::enabled()->orderBy('name')->pluck('name', 'id'));
+        }, [Vendor::class]);
 
-        $categories = collect(Category::enabled()->type('expense')->orderBy('name')->pluck('name', 'id'));
+        $categories = $cache->remember('categories_enabled', function () {
+            return collect(Category::enabled()->type('expense')->orderBy('name')->pluck('name', 'id'));
+        }, [Category::class]);
 
-        $statuses = collect(BillStatus::get()->each(function($item) {
+        $statuses = $cache->remember('bill_status', function () {
+            return collect(BillStatus::get()->each(function($item) {
             $item->name = trans('bills.status.' . $item->code);
             return $item;
         })->pluck('name', 'code'));
+        }, [BillStatus::class]);
 
         return view('expenses.bills.index', compact('bills', 'vendors', 'categories', 'statuses'));
     }

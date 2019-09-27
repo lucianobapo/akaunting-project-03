@@ -31,7 +31,11 @@ class Menu
         }, [User::class,Company::class]);
 
         // Get customer
-        if ($user->customer) {
+        $get_customer = $cache->remember('user_customer_user_id_'.$user->id, function () use ($user) {
+            return $user->customer;
+        }, [User::class]);
+
+        if ($get_customer) {
             $customer = $user;
         }
 

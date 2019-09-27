@@ -6,6 +6,7 @@ use Illuminate\View\View;
 use Modules\Inventory\Models\Item as Model;
 use Modules\Inventory\Models\Warehouse;
 use App\Models\Module\Module;
+use App\Utilities\CacheUtility;
 
 class Item
 {
@@ -17,12 +18,18 @@ class Item
      */
     public function compose(View $view)
     {
-        $modules = Module::all()->pluck('alias')->toArray();
+        $cache = new CacheUtility();
+
+        $modules = $cache->remember('modules_pluck', function () {
+            return Module::all()->pluck('alias')->toArray();
+        }, [Module::class]);
 
         if (in_array('inventory', $modules)) {
             $vendors = [];
 
-            $warehouses = Warehouse::enabled()->pluck('name', 'id');
+            $warehouses = $cache->remember('warehouses_pluck', function () {
+                return Warehouse::enabled()->pluck('name', 'id');
+            }, [Warehouse::class]);
 
             // Push to a stack
             if ($view->getName() == 'common.items.edit') {

@@ -7,6 +7,8 @@ use App\Traits\Currencies;
 use Bkwld\Cloner\Cloneable;
 use Sofa\Eloquence\Eloquence;
 use App\Traits\Media;
+use App\Utilities\CacheUtility;
+use App\Models\Common\Media as ModelMedia;
 
 class Item extends Model
 {
@@ -147,12 +149,21 @@ class Item extends Model
      */
     public function getPictureAttribute($value)
     {
-        if (!empty($value) && !$this->hasMedia('picture')) {
+        $cache = new CacheUtility();
+
+        $media = $cache->remember('itemHasMedia'.$this->id, function () {
+            if ($this->hasMedia('picture'))
+                return $this->getMedia('picture')->last();
+            else
+                return false;
+        }, [ModelMedia::class, self::class]);
+
+        if (!empty($value) && ($media==false)) {
             return $value;
-        } elseif (!$this->hasMedia('picture')) {
+        } elseif ($media==false) {
             return false;
         }
 
-        return $this->getMedia('picture')->last();
+        return $media;
     }
 }

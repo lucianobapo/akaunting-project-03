@@ -2,27 +2,23 @@
 
 namespace App\Observers;
 
-use App\Models\Module\Module as Model;
+use App\Models\Common\Media as Model;
 
 
-class Module
+class Media
 {
-
     public function created(Model $model)
     {
-        cache()->forget('modules_pluck_alias');
         cache()->tags(Model::class)->flush();
     }
 
     public function deleted(Model $model)
     {
-        cache()->forget('modules_pluck_alias');
         cache()->tags(Model::class)->flush();
     }
 
     public function updated(Model $model)
     {        
-        cache()->forget('modules_pluck_alias');
         cache()->tags(Model::class)->flush();
     }
 

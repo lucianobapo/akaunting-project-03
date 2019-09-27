@@ -4,6 +4,7 @@ namespace Modules\Inventory\Http\ViewComposers;
 
 use Illuminate\View\View;
 use App\Models\Module\Module;
+use App\Utilities\CacheUtility;
 
 class Menu
 {
@@ -15,7 +16,11 @@ class Menu
      */
     public function compose(View $view)
     {
-        $modules = Module::all()->pluck('alias')->toArray();
+        $cache = new CacheUtility();
+
+        $modules = $cache->remember('modules_pluck', function () {
+            return Module::all()->pluck('alias')->toArray();
+        }, [Module::class]);
 
         if (in_array('inventory', $modules)) {
             // Push to a stack

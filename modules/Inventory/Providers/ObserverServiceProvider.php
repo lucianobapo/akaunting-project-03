@@ -8,6 +8,7 @@ use App\Models\Expense\BillItem;
 use Modules\Inventory\Models\History as InventoryHistory;
 use Modules\Inventory\Models\Item as InventoryItem;
 use Modules\Inventory\Models\WarehouseItem as InventoryWarehouseItem;
+use Modules\Inventory\Models\Warehouse as InventoryWarehouse;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -33,6 +34,7 @@ class ObserverServiceProvider extends ServiceProvider
         InventoryHistory::observe('Modules\Inventory\Observers\InventoryHistory');
         InventoryItem::observe('Modules\Inventory\Observers\InventoryItem');
         InventoryWarehouseItem::observe('Modules\Inventory\Observers\InventoryWarehouseItem');
+        InventoryWarehouse::observe('Modules\Inventory\Observers\InventoryWarehouse');
     }
 
     /**

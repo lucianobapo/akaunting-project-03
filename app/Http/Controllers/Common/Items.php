@@ -12,6 +12,7 @@ use App\Models\Setting\Tax;
 use App\Traits\Uploads;
 use App\Utilities\Import;
 use App\Utilities\ImportFile;
+use App\Utilities\CacheUtility;
 
 class Items extends Controller
 {
@@ -22,11 +23,15 @@ class Items extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(CacheUtility $cache)
     {
-        $items = Item::with('category')->sortable(['sku' => 'desc'])->collect();
+        $items = $cache->remember('items_with_category', function () {
+            return Item::with('category')->sortable(['sku' => 'desc'])->collect();
+        }, [Item::class]);
 
-        $categories = Category::enabled()->orderBy('name')->type('item')->pluck('name', 'id');
+        $categories = $cache->remember('categories_pluck', function () {
+            return Category::enabled()->orderBy('name')->type('item')->pluck('name', 'id');
+        }, [Category::class]);
 
         return view('common.items.index', compact('items', 'categories'));
     }
