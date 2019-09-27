@@ -17,5 +17,6 @@ class InventoryHistory
     public function deleted(History $item)
     {
         cache()->forget('histories_not_track2');
+        cache()->forget('item_histories');
     }
 }
