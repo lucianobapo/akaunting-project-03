@@ -41,10 +41,10 @@ class Items extends Controller
     }
 
     protected function sanitizeHistory(){
-       $histories = Cache::remember('histories_not_track', $this->cache_minutes, function () {
+       $histories = Cache::remember('histories_not_track2', $this->cache_minutes, function () {
                     $inventoryItems = ItemInventory::all()->pluck('item_id')->toArray();       
 
-                    return History::select('item_id')->whereNotIn('item_id', $inventoryItems)->get();
+                    return History::whereNotIn('item_id', $inventoryItems)->get();
                 });
 
         //Remove Wrong history data for items without inventory track
