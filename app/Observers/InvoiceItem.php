@@ -2,10 +2,10 @@
 
 namespace App\Observers;
 
-use App\Models\Setting\Currency as Model;
+use App\Models\Income\InvoiceItem as Model;
 
 
-class Currency
+class InvoiceItem
 {
     public function created(Model $model)
     {
@@ -21,5 +21,4 @@ class Currency
     {        
         cache()->tags(Model::class)->flush();
     }
-
 }

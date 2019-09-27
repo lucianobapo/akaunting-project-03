@@ -3,11 +3,13 @@
 namespace App\Http\ViewComposers;
 
 use Illuminate\View\View;
+use App\Utilities\CacheUtility;
+use App\Models\Common\Company;
+use App\Models\Auth\User;
+
 
 class Menu
 {
-
-    protected $cache_minutes = 60 * 24;
     /**
      * Bind data to the view.
      *
@@ -18,14 +20,15 @@ class Menu
     {
         $customer = null;
         $user = auth()->user();
+        $cache = new CacheUtility();
 
         // Get all companies       
 
-        $companies = cache()->remember('companies_view_composer', $this->cache_minutes, function () use ($user) {
+        $companies = $cache->remember('companies_view_composer', function () use ($user) {
             return $user->companies()->enabled()->limit(10)->get()->each(function ($com) {
                     $com->setSettings();
             })->sortBy('name');
-        });
+        }, [User::class,Company::class]);
 
         // Get customer
         if ($user->customer) {

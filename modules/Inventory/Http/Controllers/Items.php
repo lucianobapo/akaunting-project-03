@@ -14,44 +14,44 @@ use App\Models\Setting\Tax;
 use App\Traits\Uploads;
 use App\Utilities\Import;
 use App\Utilities\ImportFile;
+use App\Utilities\CacheUtility;
 use Modules\Inventory\Models\History;
 use Modules\Inventory\Models\WarehouseItem;
 use Modules\Inventory\Models\Item as ItemInventory;
-use Illuminate\Support\Facades\Cache;
 
 
 class Items extends Controller
 {
     use Uploads;
 
-    protected $cache_minutes = 60 * 24;
-
     /**
      * Display a listing of the resource.
      *
      * @return Response
      */
-    public function index()
-    {
-        $items = Item::with('category')->collect();
+    public function index(CacheUtility $cache)
+    {        
+        $items = $cache->remember('items_with_category', function () {
+            return Item::with('category')->collect();
+        }, [Item::class]);
 
-        $categories = Category::enabled()->orderBy('name')->type('item')->pluck('name', 'id');
+        $categories = $cache->remember('categories_pluck', function () {
+            return Category::enabled()->orderBy('name')->type('item')->pluck('name', 'id');
+        }, [Category::class]);
 
         return view('common.items.index', compact('items', 'categories'));
     }
 
-    protected function sanitizeHistory(){
-       $histories = Cache::remember('histories_not_track2', $this->cache_minutes, function () {
-                    $inventoryItems = ItemInventory::all()->pluck('item_id')->toArray();       
-
+    protected function sanitizeHistory(CacheUtility $cache){
+       $histories = $cache->remember('histories_not_inventoried', function () {
+                    $inventoryItems = ItemInventory::all()->pluck('item_id')->toArray();      
                     return History::whereNotIn('item_id', $inventoryItems)->get();
-                });
+                }, [History::class,ItemInventory::class]);
 
         //Remove Wrong history data for items without inventory track
         foreach ($histories as $history) {
             $history->delete();
         }
-
     }
 
 
@@ -60,18 +60,17 @@ class Items extends Controller
      *
      * @return Response
      */
-    public function show(Item $item)
+    public function show(Item $item, CacheUtility $cache)
     {
+        $this->sanitizeHistory($cache);
 
-        $this->sanitizeHistory($item);
-
-        $invoice_count = Cache::remember('invoice_count'.$item->id, $this->cache_minutes, function () use($item) {
+        $invoice_count = $cache->remember('invoice_count_item_id_'.$item->id, function () use($item) {
             return InvoiceItem::where('item_id', $item->id)->distinct('invoice_id')->count('invoice_id');
-        });
+        }, [InvoiceItem::class]);
 
-        $bill_count = Cache::remember('bill_count'.$item->id, $this->cache_minutes, function () use($item) {
+        $bill_count = $cache->remember('bill_count_item_id_'.$item->id, function () use($item) {
             return BillItem::where('item_id', $item->id)->distinct('bill_id')->count('bill_id');
-        });
+        }, [BillItem::class]);
 
         $counts = [
             'invoices' => $invoice_count,
@@ -86,20 +85,17 @@ class Items extends Controller
 
         $transactions = [];      
 
-        $item_inventory = cache()->remember('item_inventory'.$item->id, $this->cache_minutes, function () use($item) {
-            $return = ItemInventory::where('item_id', $item->id)->first();
-            return is_null($return)?[]:$return;
-        });
+        $item_inventory = $cache->remember('inventory_item_item_id_'.$item->id, function () use($item) {
+            return ItemInventory::where('item_id', $item->id)->first();
+        }, [ItemInventory::class]);
 
-        $item_warehouse = Cache::remember('item_warehouse'.$item->id, $this->cache_minutes, function () use($item) {
-            $return = WarehouseItem::where('item_id', $item->id)->first();
-            return is_null($return)?[]:$return;
-        });
+        $item_warehouse = $cache->remember('inventory_warehouse_item_item_id_'.$item->id, function () use($item) {
+            return WarehouseItem::where('item_id', $item->id)->first();
+        }, [WarehouseItem::class]);
 
-        $item_histories = Cache::remember('item_histories'.$item->id, $this->cache_minutes, function () use($item) {
-            $return = History::where('item_id', $item->id)->get();
-            return is_null($return)?[]:$return;
-        });
+        $item_histories = $cache->remember('inventory_history_item_id_'.$item->id, function () use($item) {
+            return History::where('item_id', $item->id)->get();
+        }, [History::class]);
 
         return view('inventory::items.show', compact('item', 'item_inventory', 'item_warehouse', 'item_histories', 'counts', 'amounts', 'transactions'));
     }
@@ -109,13 +105,19 @@ class Items extends Controller
      *
      * @return Response
      */
-    public function create()
+    public function create(CacheUtility $cache)
     {
-        $categories = Category::enabled()->orderBy('name')->type('item')->pluck('name', 'id');
+        $categories = $cache->remember('categories_pluck', function () {
+            return Category::enabled()->orderBy('name')->type('item')->pluck('name', 'id');
+        }, [Category::class]);
 
-        $taxes = Tax::enabled()->orderBy('name')->get()->pluck('title', 'id');
+        $taxes = $cache->remember('taxes_pluck', function () {
+            return Tax::enabled()->orderBy('name')->get()->pluck('title', 'id');
+        }, [Tax::class]);
 
-        $currency = Currency::where('code', '=', setting('general.default_currency', 'USD'))->first();
+        $currency = $cache->remember('currency_setting', function () {
+            return Currency::where('code', '=', setting('general.default_currency', 'USD'))->first();
+        }, [Currency::class]);
 
         return view('common.items.create', compact('categories', 'taxes', 'currency'));
     }
@@ -192,11 +194,17 @@ class Items extends Controller
      */
     public function edit(Item $item)
     {
-        $categories = Category::enabled()->orderBy('name')->type('item')->pluck('name', 'id');
+        $categories = $cache->remember('categories_pluck', function () {
+            return Category::enabled()->orderBy('name')->type('item')->pluck('name', 'id');
+        }, [Category::class]);
 
-        $taxes = Tax::enabled()->orderBy('name')->get()->pluck('title', 'id');
+        $taxes = $cache->remember('taxes_pluck', function () {
+            return Tax::enabled()->orderBy('name')->get()->pluck('title', 'id');
+        }, [Tax::class]);
 
-        $currency = Currency::where('code', '=', setting('general.default_currency', 'USD'))->first();
+        $currency = $cache->remember('currency_setting', function () {
+            return Currency::where('code', '=', setting('general.default_currency', 'USD'))->first();
+        }, [Currency::class]);
 
         return view('common.items.edit', compact('item', 'categories', 'taxes', 'currency'));
     }

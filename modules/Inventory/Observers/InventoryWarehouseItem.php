@@ -2,9 +2,9 @@
 
 namespace Modules\Inventory\Observers;
 
-use Modules\Inventory\Models\History as Model;
+use Modules\Inventory\Models\WarehouseItem as Model;
 
-class InventoryHistory
+class InventoryWarehouseItem
 {
     /**
      * Listen to the created event.

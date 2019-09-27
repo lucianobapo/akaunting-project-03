@@ -29,7 +29,7 @@ class Company
         // Attach company to user
         Auth::user()->companies()->attach($company->id);
 
-        cache()->forget('companies_view_composer');
+        cache()->tags(Model::class)->flush();
     }
 
     /**
@@ -50,12 +50,12 @@ class Company
             $this->deleteItems($company, $table);
         }
 
-        cache()->forget('companies_view_composer');
+        cache()->tags(Model::class)->flush();
     }
 
     public function updated(Model $company)
     {        
-        cache()->forget('companies_view_composer');
+        cache()->tags(Model::class)->flush();
     }
 
     /**

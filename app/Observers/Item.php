@@ -2,10 +2,10 @@
 
 namespace App\Observers;
 
-use App\Models\Setting\Currency as Model;
+use App\Models\Common\Item as Model;
 
 
-class Currency
+class Item
 {
     public function created(Model $model)
     {
