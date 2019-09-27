@@ -230,7 +230,7 @@
 
                                 @stack('due_at_input_start')
                                 <tr>
-                                    <th>{{ trans('bills.payment_due') }}:</th>
+                                    <th>{{ trans('bills.due_date') }}:</th>
                                     <td class="text-right">{{ Date::parse($bill->due_at)->format($date_format) }}</td>
                                 </tr>
                                 @stack('due_at_input_end')
