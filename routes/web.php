@@ -159,7 +159,8 @@ Route::group(['middleware' => 'language'], function () {
                 Route::get('currencies/{currency}/enable', 'Settings\Currencies@enable')->name('currencies.enable');
                 Route::get('currencies/{currency}/disable', 'Settings\Currencies@disable')->name('currencies.disable');
                 Route::resource('currencies', 'Settings\Currencies');
-                Route::get('settings', 'Settings\Settings@edit');
+                Route::get('cache', 'Settings\Settings@cache')->name('settings.cache');
+                Route::get('settings', 'Settings\Settings@edit')->name('settings.edit');
                 Route::patch('settings', 'Settings\Settings@update');
                 Route::get('taxes/{tax}/enable', 'Settings\Taxes@enable')->name('taxes.enable');
                 Route::get('taxes/{tax}/disable', 'Settings\Taxes@disable')->name('taxes.disable');

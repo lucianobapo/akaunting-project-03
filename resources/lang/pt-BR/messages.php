@@ -4,7 +4,7 @@ return [
 
     'success' => [
         'added'             => ':type adicionado!',
-        'updated'           => ':type atualizado!',
+        'updated'           => ':type atualizado(a)!|:type atualizados(as)!',
         'deleted'           => ':type excluído!',
         'duplicated'        => ':type duplicado!',
         'imported'          => ':type importado!',

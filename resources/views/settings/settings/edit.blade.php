@@ -136,6 +136,11 @@
                         {{ Form::textGroup('file_size', trans('settings.system.file_size'), 'upload', []) }}
 
                         {{ Form::textGroup('file_types', trans('settings.system.file_types'), 'file-o', []) }}
+                        <div class="setting-buttons">
+                            <div class="form-group no-margin">
+                                <a href="{{ route('settings.cache') }}" class="btn btn-danger"><span class="fa fa-times-circle"></span> &nbsp;{{ trans('settings.system.flush_cache') }}</a>
+                            </div>
+                        </div>
                     </div>
 
                     @permission('update-settings-settings')

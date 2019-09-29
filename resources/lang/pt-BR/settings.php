@@ -98,6 +98,7 @@ return [
         ],
         'file_size'         => 'Tamanho máximo do arquivo (MB)',
         'file_types'        => 'Tipos de arquivos permitidos',
+        'flush_cache'        => 'Reiniciar o cache do sistma',
     ],
 
 ];

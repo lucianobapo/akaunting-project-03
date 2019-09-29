@@ -15,4 +15,14 @@ class CacheUtility
             return is_null($return)?[]:$return;
         });
     }
+
+    public function flush()
+    {
+        cache()->flush();
+    }
+
+    public function flushTag($tag)
+    {
+        cache()->tags($tag)->flush();
+    }
 }

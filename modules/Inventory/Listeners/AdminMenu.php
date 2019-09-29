@@ -7,11 +7,12 @@ use Menu;
 use Nwidart\Menus\MenuItem;
 use App\Models\Module\Module;
 use Illuminate\Support\Facades\Cache;
+use App\Utilities\CacheUtility;
 
 class AdminMenu
 {
     private $menuItems;
-    protected $cache_minutes = 60 * 24;
+    protected $cache;
 
     /**
      * The constructor.
@@ -22,6 +23,7 @@ class AdminMenu
     public function __construct(MenuItem $menuItems)
     {
         $this->menuItems = $menuItems;
+        $this->cache = new CacheUtility;
     }
 
     /**
@@ -32,9 +34,9 @@ class AdminMenu
      */
     public function handle(AdminMenuCreated $event)
     {
-        $modules = Cache::remember('modules_pluck_alias', $this->cache_minutes, function () {
+        $modules = $this->cache->remember('modules_pluck_alias', function () {
             return Module::all()->pluck('alias')->toArray();
-        });
+        }, [Module::class]);
 
         if (!in_array('inventory', $modules)) {
             return false;

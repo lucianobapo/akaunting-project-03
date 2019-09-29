@@ -6,19 +6,21 @@ use App\Models\Common\Company as Model;
 use Artisan;
 use Auth;
 
-class Company
+class Company extends TObserver
 {
+    public $modelClass = Model::class; 
+
     /**
      * Listen to the created event.
      *
      * @param  Model  $company
      * @return void
      */
-    public function created(Model $company)
+    public function created($model)
     {
         // Create seeds
         Artisan::call('company:seed', [
-            'company' => $company->id
+            'company' => $model->id
         ]);
 
         // Check if user is logged in
@@ -27,9 +29,9 @@ class Company
         }
 
         // Attach company to user
-        Auth::user()->companies()->attach($company->id);
+        Auth::user()->companies()->attach($model->id);
 
-        cache()->tags(Model::class)->flush();
+        parent::created($model);
     }
 
     /**
@@ -38,7 +40,7 @@ class Company
      * @param  Model  $company
      * @return void
      */
-    public function deleted(Model $company)
+    public function deleted($model)
     {
         $tables = [
             'accounts', 'bill_histories', 'bill_items', 'bill_payments', 'bill_statuses', 'bills', 'categories',
@@ -47,28 +49,11 @@ class Company
         ];
 
         foreach ($tables as $table) {
-            $this->deleteItems($company, $table);
+            foreach ($model->$table as $item) {
+                $item->delete();
+            }
         }
 
-        cache()->tags(Model::class)->flush();
-    }
-
-    public function updated(Model $company)
-    {        
-        cache()->tags(Model::class)->flush();
-    }
-
-    /**
-     * Delete items in batch.
-     *
-     * @param  Model  $company
-     * @param  $table
-     * @return void
-     */
-    protected function deleteItems($company, $table)
-    {
-        foreach ($company->$table as $item) {
-            $item->delete();
-        }
+        parent::deleted($model);
     }
 }
