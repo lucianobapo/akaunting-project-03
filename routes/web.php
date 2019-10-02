@@ -8,35 +8,12 @@ Route::group(['middleware' => 'language'], function () {
             Route::get('{id}/download', 'Common\Uploads@download');
         });
 
-        Route::group(['middleware' => 'permission:read-admin-panel'], function () {
-            Route::group(['prefix' => 'wizard'], function () {
-                Route::get('/', 'Wizard\Companies@edit')->name('wizard.index');
-                Route::get('companies', 'Wizard\Companies@edit')->name('wizard.companies.edit');
-                Route::patch('companies', 'Wizard\Companies@update')->name('wizard.companies.update');
-
-                Route::get('currencies', 'Wizard\Currencies@index')->name('wizard.currencies.index');
-                Route::get('currencies/create', 'Wizard\Currencies@create')->name('wizard.currencies.create');
-                Route::get('currencies/{currency}/edit', 'Wizard\Currencies@edit')->name('wizard.currencies.edit');
-                Route::get('currencies/{currency}/enable', 'Wizard\Currencies@enable')->name('wizard.currencies.enable');
-                Route::get('currencies/{currency}/disable', 'Wizard\Currencies@disable')->name('wizard.currencies.disable');
-                Route::get('currencies/{currency}/delete', 'Wizard\Currencies@destroy')->name('wizard.currencies.delete');
-                Route::post('currencies', 'Wizard\Currencies@store')->name('wizard.currencies.store');
-                Route::patch('currencies/{currency}', 'Wizard\Currencies@update')->name('wizard.currencies.update');
-
-                Route::get('taxes', 'Wizard\Taxes@index')->name('wizard.taxes.index');
-                Route::get('taxes/create', 'Wizard\Taxes@create')->name('wizard.taxes.create');
-                Route::get('taxes/{tax}/edit', 'Wizard\Taxes@edit')->name('wizard.taxes.edit');
-                Route::get('taxes/{tax}/enable', 'Wizard\Taxes@enable')->name('wizard.taxes.enable');
-                Route::get('taxes/{tax}/disable', 'Wizard\Taxes@disable')->name('wizard.taxes.disable');
-                Route::get('taxes/{tax}/delete', 'Wizard\Taxes@destroy')->name('wizard.taxes.delete');
-                Route::post('taxes', 'Wizard\Taxes@store')->name('wizard.taxes.store');
-                Route::patch('taxes/{tax}', 'Wizard\Taxes@update')->name('wizard.taxes.upadate');
-
-                Route::get('finish', 'Wizard\Finish@index')->name('wizard.finish.index');
-            });
-        });
+        require_once('web/wizard.php');      
 
         Route::group(['middleware' => ['adminmenu', 'permission:read-admin-panel']], function () {
+     
+            require_once('web/auth.php');     
+
             Route::get('/', 'Common\Dashboard@index');
 
             Route::group(['prefix' => 'uploads'], function () {
@@ -61,20 +38,7 @@ Route::group(['middleware' => 'language'], function () {
                 Route::get('search/search', 'Common\Search@search')->name('search.search');
                 Route::resource('search', 'Common\Search');
                 Route::post('notifications/disable', 'Common\Notifications@disable')->name('notifications.disable');
-            });
-
-            Route::group(['prefix' => 'auth'], function () {
-                Route::get('logout', 'Auth\Login@destroy')->name('logout');
-                Route::get('users/autocomplete', 'Auth\Users@autocomplete');
-                Route::get('users/{user}/read-bills', 'Auth\Users@readUpcomingBills');
-                Route::get('users/{user}/read-invoices', 'Auth\Users@readOverdueInvoices');
-                Route::get('users/{user}/read-items', 'Auth\Users@readItemsOutOfStock');
-                Route::get('users/{user}/enable', 'Auth\Users@enable')->name('users.enable');
-                Route::get('users/{user}/disable', 'Auth\Users@disable')->name('users.disable');
-                Route::resource('users', 'Auth\Users');
-                Route::resource('roles', 'Auth\Roles');
-                Route::resource('permissions', 'Auth\Permissions');
-            });
+            });            
 
             Route::group(['prefix' => 'incomes'], function () {
                 Route::get('invoices/{invoice}/sent', 'Incomes\Invoices@markSent');

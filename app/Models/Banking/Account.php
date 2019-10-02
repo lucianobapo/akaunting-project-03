@@ -4,6 +4,7 @@ namespace App\Models\Banking;
 
 use App\Models\Model;
 use Sofa\Eloquence\Eloquence;
+use App\Utilities\CacheUtility;
 
 class Account extends Model
 {
@@ -88,14 +89,24 @@ class Account extends Model
      */
     public function getBalanceAttribute()
     {
+        $cache = new CacheUtility();
+
         // Opening Balance
         $total = $this->opening_balance;
 
         // Sum Incomes
-        $total += $this->invoice_payments()->sum('amount') + $this->revenues()->sum('amount');
+        $incomes = $cache->remember('account_incomes'.$this->id, function () {
+            return $this->invoice_payments()->sum('amount') + $this->revenues()->sum('amount');
+        }, ['App\Models\Income\InvoicePayment', 'App\Models\Income\Revenue', self::class]);
+
+        $total += $incomes;
 
         // Subtract Expenses
-        $total -= $this->bill_payments()->sum('amount') + $this->payments()->sum('amount');
+        $expenses = $cache->remember('account_expenses'.$this->id, function () {
+            return $this->bill_payments()->sum('amount') + $this->payments()->sum('amount');
+        }, ['App\Models\Expense\BillPayment', 'App\Models\Expense\Payment', self::class]);
+
+        $total -= $expenses;
 
         return $total;
     }
