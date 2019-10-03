@@ -13,84 +13,14 @@ Route::group(['middleware' => 'language'], function () {
         Route::group(['middleware' => ['adminmenu', 'permission:read-admin-panel']], function () {
      
             require_once('web/auth.php');     
+            require_once('web/common.php');     
+            require_once('web/incomes.php');     
+            require_once('web/expenses.php');     
 
             Route::get('/', 'Common\Dashboard@index');
 
             Route::group(['prefix' => 'uploads'], function () {
                 Route::delete('{id}', 'Common\Uploads@destroy');
-            });
-
-            Route::group(['prefix' => 'common'], function () {
-                Route::get('companies/{company}/set', 'Common\Companies@set')->name('companies.switch');
-                Route::get('companies/{company}/enable', 'Common\Companies@enable')->name('companies.enable');
-                Route::get('companies/{company}/disable', 'Common\Companies@disable')->name('companies.disable');
-                Route::resource('companies', 'Common\Companies');
-                Route::get('dashboard/cashflow', 'Common\Dashboard@cashFlow')->name('dashboard.cashflow');
-                Route::get('import/{group}/{type}', 'Common\Import@create')->name('import.create');
-                Route::get('items/autocomplete', 'Common\Items@autocomplete')->name('items.autocomplete');
-                Route::post('items/totalItem', 'Common\Items@totalItem')->middleware(['money'])->name('items.total');
-                Route::get('items/{item}/duplicate', 'Common\Items@duplicate')->name('items.duplicate');
-                Route::post('items/import', 'Common\Items@import')->name('items.import');
-                Route::get('items/export', 'Common\Items@export')->name('items.export');
-                Route::get('items/{item}/enable', 'Common\Items@enable')->name('items.enable');
-                Route::get('items/{item}/disable', 'Common\Items@disable')->name('items.disable');
-                Route::resource('items', 'Common\Items', ['middleware' => ['money']]);
-                Route::get('search/search', 'Common\Search@search')->name('search.search');
-                Route::resource('search', 'Common\Search');
-                Route::post('notifications/disable', 'Common\Notifications@disable')->name('notifications.disable');
-            });            
-
-            Route::group(['prefix' => 'incomes'], function () {
-                Route::get('invoices/{invoice}/sent', 'Incomes\Invoices@markSent');
-                Route::get('invoices/{invoice}/email', 'Incomes\Invoices@emailInvoice');
-                Route::get('invoices/{invoice}/pay', 'Incomes\Invoices@markPaid');
-                Route::get('invoices/{invoice}/print', 'Incomes\Invoices@printInvoice');
-                Route::get('invoices/{invoice}/pdf', 'Incomes\Invoices@pdfInvoice');
-                Route::get('invoices/{invoice}/duplicate', 'Incomes\Invoices@duplicate');
-                Route::get('invoices/addItem', 'Incomes\Invoices@addItem')->middleware(['money'])->name('invoice.add.item');
-                Route::post('invoices/payment', 'Incomes\Invoices@payment')->middleware(['dateformat', 'money'])->name('invoice.payment');
-                Route::delete('invoices/payment/{payment}', 'Incomes\Invoices@paymentDestroy');
-                Route::post('invoices/import', 'Incomes\Invoices@import')->name('invoices.import');
-                Route::get('invoices/export', 'Incomes\Invoices@export')->name('invoices.export');
-                Route::resource('invoices', 'Incomes\Invoices', ['middleware' => ['dateformat', 'money']]);
-                Route::get('revenues/{revenue}/duplicate', 'Incomes\Revenues@duplicate');
-                Route::post('revenues/import', 'Incomes\Revenues@import')->name('revenues.import');
-                Route::get('revenues/export', 'Incomes\Revenues@export')->name('revenues.export');
-                Route::resource('revenues', 'Incomes\Revenues', ['middleware' => ['dateformat', 'money']]);
-                Route::get('customers/currency', 'Incomes\Customers@currency');
-                Route::get('customers/{customer}/duplicate', 'Incomes\Customers@duplicate');
-                Route::post('customers/customer', 'Incomes\Customers@customer');
-                Route::post('customers/field', 'Incomes\Customers@field');
-                Route::post('customers/import', 'Incomes\Customers@import')->name('customers.import');
-                Route::get('customers/export', 'Incomes\Customers@export')->name('customers.export');
-                Route::get('customers/{customer}/enable', 'Incomes\Customers@enable')->name('customers.enable');
-                Route::get('customers/{customer}/disable', 'Incomes\Customers@disable')->name('customers.disable');
-                Route::resource('customers', 'Incomes\Customers');
-            });
-
-            Route::group(['prefix' => 'expenses'], function () {
-                Route::get('bills/{bill}/received', 'Expenses\Bills@markReceived');
-                Route::get('bills/{bill}/print', 'Expenses\Bills@printBill');
-                Route::get('bills/{bill}/pdf', 'Expenses\Bills@pdfBill');
-                Route::get('bills/{bill}/duplicate', 'Expenses\Bills@duplicate');
-                Route::get('bills/addItem', 'Expenses\Bills@addItem')->middleware(['money'])->name('bill.add.item');
-                Route::post('bills/payment', 'Expenses\Bills@payment')->middleware(['dateformat', 'money'])->name('bill.payment');
-                Route::delete('bills/payment/{payment}', 'Expenses\Bills@paymentDestroy');
-                Route::post('bills/import', 'Expenses\Bills@import')->name('bills.import');
-                Route::get('bills/export', 'Expenses\Bills@export')->name('bills.export');
-                Route::resource('bills', 'Expenses\Bills', ['middleware' => ['dateformat', 'money']]);
-                Route::get('payments/{payment}/duplicate', 'Expenses\Payments@duplicate');
-                Route::post('payments/import', 'Expenses\Payments@import')->name('payments.import');
-                Route::get('payments/export', 'Expenses\Payments@export')->name('payments.export');
-                Route::resource('payments', 'Expenses\Payments', ['middleware' => ['dateformat', 'money']]);
-                Route::get('vendors/currency', 'Expenses\Vendors@currency');
-                Route::get('vendors/{vendor}/duplicate', 'Expenses\Vendors@duplicate');
-                Route::post('vendors/vendor', 'Expenses\Vendors@vendor');
-                Route::post('vendors/import', 'Expenses\Vendors@import')->name('vendors.import');
-                Route::get('vendors/export', 'Expenses\Vendors@export')->name('vendors.export');
-                Route::get('vendors/{vendor}/enable', 'Expenses\Vendors@enable')->name('vendors.enable');
-                Route::get('vendors/{vendor}/disable', 'Expenses\Vendors@disable')->name('vendors.disable');
-                Route::resource('vendors', 'Expenses\Vendors');
             });
 
             Route::group(['prefix' => 'banking'], function () {

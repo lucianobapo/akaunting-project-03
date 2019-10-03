@@ -4,6 +4,7 @@
 /public/files
 /storage/*.key
 /vendor
+/src
 /.idea
 /.vagrant
 /.github
