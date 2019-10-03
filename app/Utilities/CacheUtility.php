@@ -12,7 +12,7 @@ class CacheUtility
     {
         $tag = $this->prepareTags($tag);
         
-        return cache()->tags($tag)->remember($key, $this->cache_minutes, function () use ($callback){
+        return cache()->tags($tag)->remember(session('company_id').$key, $this->cache_minutes, function () use ($callback){
             $return = $callback();
             return is_null($return)?[]:$return;
         });
