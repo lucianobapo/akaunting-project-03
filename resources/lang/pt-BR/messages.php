@@ -3,13 +3,13 @@
 return [
 
     'success' => [
-        'added'             => ':type adicionado!',
-        'updated'           => ':type atualizado(a)!|:type atualizados(as)!',
-        'deleted'           => ':type excluído!',
-        'duplicated'        => ':type duplicado!',
-        'imported'          => ':type importado!',
-        'enabled'           => ': tipo habilitado!',
-        'disabled'          => ': tipo desativado!',
+        'added'             => ':type adicionado(a)!',
+        'updated'           => ':type atualizado(a)!',
+        'deleted'           => ':type excluído(a)!',
+        'duplicated'        => ':type duplicado(a)!',
+        'imported'          => ':type importado(a)!',
+        'enabled'           => ': tipo habilitado(a)!',
+        'disabled'          => ': tipo desativado(a)!',
     ],
 
     'error' => [
