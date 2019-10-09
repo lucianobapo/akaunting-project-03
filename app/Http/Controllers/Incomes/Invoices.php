@@ -250,7 +250,6 @@ class Invoices extends Controller
         $invoice = dispatch(new UpdateInvoice($invoice, $request));
 
         $message = trans('messages.success.updated', ['type' => trans_choice('general.invoices', 1)]);
-        debug($message);
 
         flash($message)->success();
 
