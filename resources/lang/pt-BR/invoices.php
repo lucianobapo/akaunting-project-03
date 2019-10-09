@@ -19,6 +19,7 @@ return [
     'item_name'             => 'Item|Itens',
 
     'show_discount'         => ':discount% desconto',
+    'show_discount2'         => ':discount desconto',
     'add_discount'          => 'Adicionar desconto',
     'discount_desc'         => 'subtotal',
 

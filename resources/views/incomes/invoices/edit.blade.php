@@ -84,6 +84,7 @@
                                 <td class="text-right">
                                     <span id="discount-total"></span>
                                     {!! Form::hidden('discount', null, ['id' => 'discount', 'class' => 'form-control text-right']) !!}
+                                    {!! Form::hidden('discount2', null, ['id' => 'discount2', 'class' => 'form-control text-right']) !!}
                                 </td>
                             </tr>
                             @stack('add_discount_td_end')
@@ -237,6 +238,14 @@
                     html += '    <div class="col-md-6">';
                     html += '        <div class="discount-description">';
                     html += '           {{ trans('invoices.discount_desc') }}';
+                    html += '        </div>';
+                    html += '    </div>';
+                    html += '</div>';
+                    html += '<div class="discount box-body">';
+                    html += '    <div class="col-md-6">';
+                    html += '        <div class="input-group" id="input-discount2">';
+                    html += '            {!! Form::number('pre-discount2', null, ['id' => 'pre-discount2', 'class' => 'form-control text-right']) !!}';
+                    html += '            <div class="input-group-addon"><i class="fa fa-usd"></i></div>';
                     html += '        </div>';
                     html += '    </div>';
                     html += '</div>';
@@ -398,7 +407,14 @@
         $(document).on('keyup', '#pre-discount', function(e){
             e.preventDefault();
 
-            $('#discount').val($(this).val());
+            $('#discount').val(parseInt($(this).val()));
+
+            totalItem();
+        });
+        $(document).on('keyup', '#pre-discount2', function(e){
+            e.preventDefault();
+
+            $('#discount2').val($(this).val());
 
             totalItem();
         });
@@ -503,7 +519,7 @@
                 url: '{{ url("common/items/totalItem") }}',
                 type: 'POST',
                 dataType: 'JSON',
-                data: $('#currency_code, #discount input[type=\'number\'], #items input[type=\'text\'], #items input[type=\'number\'], #items input[type=\'hidden\'], #items textarea, #items select').serialize(),
+                data: $('#currency_code, #discount2 input[type=\'number\'], #discount input[type=\'number\'], #items input[type=\'text\'], #items input[type=\'number\'], #items input[type=\'hidden\'], #items textarea, #items select').serialize(),
                 headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
                 success: function(data) {
                     if (data) {

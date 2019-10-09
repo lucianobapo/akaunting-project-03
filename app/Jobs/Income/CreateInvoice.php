@@ -50,10 +50,11 @@ class CreateInvoice
         $sub_total = 0;
         $discount_total = 0;
         $discount = $this->request['discount'];
+        $discount2 = $this->request['discount2'];
 
         if ($this->request['item']) {
             foreach ($this->request['item'] as $item) {
-                $invoice_item = dispatch(new CreateInvoiceItem($item, $invoice, $discount));
+                $invoice_item = dispatch(new CreateInvoiceItem($item, $invoice, $discount, $discount2));
 
                 // Calculate totals
                 $tax_total += $invoice_item->tax;
@@ -80,6 +81,11 @@ class CreateInvoice
         // Apply discount to total
         if ($discount) {
             $s_discount = $s_total * ($discount / 100);
+            $discount_total += $s_discount;
+            $s_total = $s_total - $s_discount;
+        }
+        if ($discount2) {
+            $s_discount = $discount2;
             $discount_total += $s_discount;
             $s_total = $s_total - $s_discount;
         }

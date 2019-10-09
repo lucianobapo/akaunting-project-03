@@ -310,6 +310,7 @@ class Items extends Controller
         $input_items = $request->input('item');
         $currency_code = $request->input('currency_code');
         $discount = $request->input('discount');
+        $discount2 = $request->input('discount2');
 
         if (empty($currency_code)) {
             $currency_code = setting('general.default_currency');
@@ -334,9 +335,14 @@ class Items extends Controller
                 $item_discount_total = $item_sub_total;
 
                 // Apply discount to item
-                if ($discount) {
+                if ($discount && is_numeric($discount)) {
                     $item_discount_total = $item_sub_total - ($item_sub_total * ($discount / 100));
-                }
+                } 
+
+                if ($discount2 && is_numeric($discount2)) {
+                    $item_discount_total = $item_sub_total - $discount2 ;
+                } 
+                
 
                 if (!empty($item['tax_id'])) {
                     $inclusives = $compounds = $taxes = [];
@@ -395,12 +401,19 @@ class Items extends Controller
         $json->tax_total = money($tax_total, $currency_code, true)->format();
 
         // Apply discount to total
-        if ($discount) {
+        if ($discount && is_numeric($discount)) {
             $json->discount_text= trans('invoices.show_discount', ['discount' => $discount]);
             $json->discount_total = money($sub_total * ($discount / 100), $currency_code, true)->format();
 
             $sub_total = $sub_total - ($sub_total * ($discount / 100));
         }
+
+        if ($discount2 && is_numeric($discount2)) {
+            $json->discount_text= trans('invoices.show_discount2', ['discount' => money($discount2, $currency_code, true)->format()]);
+            $json->discount_total = money($discount2, $currency_code, true)->format();
+
+            $sub_total = $sub_total - $discount2;
+        } 
 
         $grand_total = $sub_total + $tax_total;
 
