@@ -4,8 +4,9 @@ namespace App\Notifications\Expense;
 
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class Bill extends Notification
+class Bill extends Notification implements ShouldQueue
 {
     /**
      * The invoice model.

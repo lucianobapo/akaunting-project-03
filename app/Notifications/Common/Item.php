@@ -4,8 +4,9 @@ namespace App\Notifications\Common;
 
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class Item extends Notification
+class Item extends Notification implements ShouldQueue
 {
     /**
      * The item model.

@@ -6,8 +6,9 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
 use App\Traits\DateTime;
 use Date;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class Invoice extends Notification
+class Invoice extends Notification implements ShouldQueue
 {
     use DateTime;
 

@@ -4,8 +4,9 @@ namespace App\Notifications\Auth;
 
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class Reset extends Notification
+class Reset extends Notification implements ShouldQueue
 {
     /**
      * The password reset token.
