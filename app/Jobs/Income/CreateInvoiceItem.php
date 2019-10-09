@@ -77,7 +77,7 @@ class CreateInvoiceItem
                                 $user->notify(new ItemReminderNotification($item_object));
                             }
                             catch(\Exception $e){ // Using a generic exception
-                                debug('Mail not sent', $e);
+                                logger('Mail not sent', $e);
                             }
 
                             
@@ -97,7 +97,7 @@ class CreateInvoiceItem
                         $user->notify(new ItemNotification($item_object));
                     }
                     catch(\Exception $e){ // Using a generic exception
-                        debug('Mail not sent', $e);
+                        logger('Mail not sent', $e);
                     }
                 }
             }
