@@ -49,8 +49,11 @@ class Bills extends Controller
      */
     public function index(CacheUtility $cache)
     {
-        $bills = $cache->remember('bills_with_vendor_status', function () {
-            return Bill::with(['vendor', 'status', 'items', 'payments', 'histories'])->collect(['due_at'=> 'desc']);
+        $bills = $cache->remember('bills_with_vendor_status_ordered', function () {
+            return Bill::with(['vendor', 'status', 'items', 'payments', 'histories'])->collect([
+                'billed_at'=> 'desc'
+                //'due_at'=> 'desc'
+            ]);
         }, [Bill::class]);
 
         $vendors = $cache->remember('vendors_enabled', function () {
