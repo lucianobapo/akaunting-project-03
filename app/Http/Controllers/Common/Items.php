@@ -408,9 +408,10 @@ class Items extends Controller
             $sub_total = $sub_total - ($sub_total * ($discount / 100));
         }
 
+
         if ($discount2 && is_numeric($discount2)) {
-            $json->discount_text= trans('invoices.show_discount2', ['discount' => money($discount2, $currency_code, true)->format()]);
-            $json->discount_total = money($discount2, $currency_code, true)->format();
+            $json->discount_text= trans('invoices.show_discount2', ['discount' => money((double) $discount2, $currency_code, true)->format()]);
+            $json->discount_total = money((double) $discount2, $currency_code, true)->format();
 
             $sub_total = $sub_total - $discount2;
         } 

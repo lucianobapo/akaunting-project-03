@@ -407,14 +407,14 @@
         $(document).on('keyup', '#pre-discount', function(e){
             e.preventDefault();
 
-            $('#discount').val(parseInt($(this).val()));
+            $('#discount').val(parseFloat($(this).val()));
 
             totalItem();
         });
         $(document).on('keyup', '#pre-discount2', function(e){
             e.preventDefault();
 
-            $('#discount2').val($(this).val());
+            $('#discount2').val(parseFloat($(this).val()));
 
             totalItem();
         });
