@@ -97,14 +97,14 @@ class Account extends Model
         // Sum Incomes
         $incomes = $cache->remember('account_incomes'.$this->id, function () {
             return $this->invoice_payments()->sum('amount') + $this->revenues()->sum('amount');
-        }, ['App\Models\Income\InvoicePayment', 'App\Models\Income\Revenue', self::class]);
+        }, ['App\Models\Income\InvoiceItem', 'App\Models\Income\InvoicePayment', 'App\Models\Income\Revenue', self::class]);
 
         $total += $incomes;
 
         // Subtract Expenses
         $expenses = $cache->remember('account_expenses'.$this->id, function () {
             return $this->bill_payments()->sum('amount') + $this->payments()->sum('amount');
-        }, ['App\Models\Expense\BillPayment', 'App\Models\Expense\Payment', self::class]);
+        }, ['App\Models\Expense\BillItem', 'App\Models\Expense\BillPayment', 'App\Models\Expense\Payment', self::class]);
 
         $total -= $expenses;
 
