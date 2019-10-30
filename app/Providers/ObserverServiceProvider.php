@@ -10,6 +10,7 @@ use App\Models\Setting\Tax;
 use App\Models\Setting\Category;
 use App\Models\Setting\Currency;
 use App\Models\Module\Module;
+use App\Models\Income\Invoice;
 use App\Models\Income\InvoiceItem;
 use App\Models\Expense\Bill;
 use App\Models\Expense\BillItem;
@@ -35,6 +36,7 @@ class ObserverServiceProvider extends ServiceProvider
         Item::observe('App\Observers\Item');        
         Tax::observe('App\Observers\Tax');
         Category::observe('App\Observers\Category');
+        Invoice::observe('App\Observers\Invoice');
         InvoiceItem::observe('App\Observers\InvoiceItem');
         BillItem::observe('App\Observers\BillItem');
         
