@@ -18,7 +18,8 @@ trait DateTime
         $chars = ['dash' => '-', 'slash' => '/', 'dot' => '.', 'comma' => ',', 'space' => ' '];
 
         $date_format = setting('general.date_format', 'd F Y');
-        $date_separator = $chars[setting('general.date_separator', 'space')];
+        $separator = setting('general.date_separator', 'space');
+        $date_separator = in_array($separator,$chars)?$chars[$separator]:$chars['space'];
 
         return str_replace(' ', $date_separator, $date_format);
     }
