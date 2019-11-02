@@ -73,7 +73,7 @@
                         @stack('timeline_body_send_invoice_head_end')
 
                         @stack('timeline_body_send_invoice_body_start')
-                        <div class="timeline-body">
+                        <div class="timeline-body">                            
                             @if ($invoice->status->code != 'sent' && $invoice->status->code != 'partial')
                                 @stack('timeline_body_send_invoice_body_message_start')
                                 {{ trans_choice('general.statuses', 1) . ': ' . trans('invoices.messages.status.send.draft') }}
@@ -100,7 +100,8 @@
                                 @stack('timeline_body_send_invoice_body_button_email_end')
                             @else
                                 @stack('timeline_body_send_invoice_body_message_start')
-                                {{ trans_choice('general.statuses', 1) . ': ' . trans('invoices.messages.status.send.sent', ['date' => Date::parse($invoice_history->created_at)->format($date_format)]) }}
+                                {{ trans_choice('general.statuses', 1) . ': ' . trans('invoices.messages.status.send.sent', ['date' => 
+                                $invoice_history ? Date::parse($invoice_history->created_at)->format($date_format):'']) }}
                                 @stack('timeline_body_send_invoice_body_message_end')
                             @endif
                         </div>
