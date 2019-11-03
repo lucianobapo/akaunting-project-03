@@ -302,6 +302,9 @@
                                     @if ($item->sku)
                                         <br><small>{{ trans('items.sku') }}: {{ $item->sku }}</small>
                                     @endif
+                                    @if ($item->item && $item->item->description)
+                                        <br><small>{{ trans('general.description') }}: {{ $item->item->description }}</small>
+                                    @endif
                                 </td>
                                 @stack('name_td_end')
 
