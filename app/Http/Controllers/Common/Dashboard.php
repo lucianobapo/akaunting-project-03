@@ -52,7 +52,7 @@ class Dashboard extends Controller
 
         list($donut_incomes, $donut_expenses) = $this->getDonuts();
 
-        $accounts = Account::enabled()->take(6)->get();
+        $accounts = Account::enabled()->take(10)->get();
 
         $latest_incomes = $this->getLatestIncomes();
 
