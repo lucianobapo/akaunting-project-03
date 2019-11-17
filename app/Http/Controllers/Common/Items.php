@@ -345,12 +345,15 @@ class Items extends Controller
                 
 
                 if (!empty($item['tax_id'])) {
-                    $inclusives = $compounds = $taxes = [];
+                    $dentro = $inclusives = $compounds = $taxes = [];
 
                     foreach ($item['tax_id'] as $tax_id) {
                         $tax = Tax::find($tax_id);
 
                         switch ($tax->type) {
+                            case 'dentro':
+                                $dentro[] = $tax;
+                                break;
                             case 'inclusive':
                                 $inclusives[] = $tax;
                                 break;
@@ -375,6 +378,34 @@ class Items extends Controller
                         $item_tax_total = $item_sub_and_tax_total - $item_base_rate;
 
                         $item_sub_total = $item_base_rate + $discount;
+                    }
+
+                    if ($dentro) {
+                        $item_sub_and_tax_total = $item_discount_total + $item_tax_total;
+                        logger('$item_sub_and_tax_total');
+                        logger($item_sub_and_tax_total);
+
+                        $item_sum_rates = collect($dentro)->sum('rate')/100;
+                        logger('$item_sum_rates');
+                        logger($item_sum_rates);
+
+                        $item_rate = (1 - $item_sum_rates);
+                        logger('$item_rate');
+                        logger($item_rate);
+
+                        $item_base_rate = $item_sub_and_tax_total / $item_rate;
+                        logger('$item_base_rate');
+                        logger($item_base_rate);
+
+                        $item_tax_total = $item_base_rate - $item_sub_and_tax_total;
+                        logger('$item_tax_total');
+                        logger($item_tax_total);
+
+                        $item_sub_total = $item_sub_and_tax_total;
+                        //$item_sub_total = $item_base_rate + $discount;
+                        //$item_sub_total = $item_sub_and_tax_total - $item_tax_total;
+                        logger('$item_sub_total');
+                        logger($item_sub_total);
                     }
 
                     if ($compounds) {
