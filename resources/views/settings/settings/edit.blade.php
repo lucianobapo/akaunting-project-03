@@ -56,6 +56,13 @@
                     </div>
 
                     <div class="tab-pane tab-margin" id="invoice">
+                        {{ Form::textGroup('bill_number_prefix', trans('settings.invoice.prefix'), 'font', []) }}
+
+                        {{ Form::textGroup('bill_number_digit', trans('settings.invoice.digit'), 'text-width', []) }}
+
+                        {{ Form::textGroup('bill_number_next', trans('settings.invoice.next'), 'chevron-right', []) }}
+
+
                         {{ Form::textGroup('invoice_number_prefix', trans('settings.invoice.prefix'), 'font', []) }}
 
                         {{ Form::textGroup('invoice_number_digit', trans('settings.invoice.digit'), 'text-width', []) }}

@@ -2,7 +2,7 @@
 
 return [
 
-    'invoice_number'        => 'Número da Fatura',
+    'invoice_number'        => 'Número da Venda',
     'invoice_date'          => 'Data de Emissão',
     'total_price'           => 'Valor total',
     'due_date'              => 'Data de Vencimento',

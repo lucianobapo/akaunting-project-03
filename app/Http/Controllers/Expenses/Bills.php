@@ -29,6 +29,7 @@ use App\Models\Setting\Tax;
 use App\Traits\Currencies;
 use App\Traits\DateTime;
 use App\Traits\Uploads;
+use App\Traits\Expenses;
 use App\Utilities\Import;
 use App\Utilities\ImportFile;
 use App\Utilities\Modules;
@@ -40,7 +41,7 @@ use Storage;
 
 class Bills extends Controller
 {
-    use DateTime, Currencies, Uploads;
+    use DateTime, Currencies, Uploads, Expenses;
 
     /**
      * Display a listing of the resource.
@@ -116,8 +117,10 @@ class Bills extends Controller
         $taxes = Tax::enabled()->orderBy('name')->get()->pluck('title', 'id');
 
         $categories = Category::enabled()->type('expense')->orderBy('name')->pluck('name', 'id');
+        
+        $number = $this->getNextBillNumber();
 
-        return view('expenses.bills.create', compact('vendors', 'currencies', 'currency', 'items', 'taxes', 'categories'));
+        return view('expenses.bills.create', compact('vendors', 'currencies', 'currency', 'items', 'taxes', 'categories', 'number'));
     }
 
     /**
@@ -157,6 +160,9 @@ class Bills extends Controller
             'notify' => 0,
             'description' => trans('messages.success.added', ['type' => $clone->bill_number]),
         ]);
+
+        // Update next bill number
+        $this->increaseNextBillNumber();
 
         $message = trans('messages.success.duplicated', ['type' => trans_choice('general.bills', 1)]);
 

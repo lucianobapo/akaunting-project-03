@@ -7,6 +7,7 @@ use App\Models\Setting\Currency;
 use App\Traits\Currencies;
 use App\Traits\DateTime;
 use App\Traits\Media;
+use App\Traits\Expenses;
 use App\Traits\Recurring;
 use Bkwld\Cloner\Cloneable;
 use Sofa\Eloquence\Eloquence;
@@ -14,7 +15,7 @@ use Date;
 
 class Bill extends Model
 {
-    use Cloneable, Currencies, DateTime, Eloquence, Media, Recurring;
+    use Cloneable, Currencies, DateTime, Eloquence, Media, Recurring, Expenses;
 
     protected $table = 'bills';
 
@@ -141,6 +142,7 @@ class Bill extends Model
     public function onCloning($src, $child = null)
     {
         $this->bill_status_code = 'draft';
+        $this->bill_number = $this->getNextBillNumber();        
     }
 
     /**
