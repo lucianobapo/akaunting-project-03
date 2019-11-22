@@ -3,6 +3,17 @@
 @section('title', trans_choice('general.invoices', 1) . ': ' . $invoice->invoice_number)
 
 @section('content')
+
+@if (($invoice->invoice_status_code=='draft') && is_file( public_path('/img/'.$invoice->invoice_status_code.'.jpg') ))
+    <div id="watermark">
+        <p>
+            @for($i=0;$i<120;$i++)
+                {{ $invoice->invoice_status_code }}
+            @endfor
+        </p>
+    </div>
+@endif
+
 <div class="row header">
     <div class="col-58">
         @if ($logo)
