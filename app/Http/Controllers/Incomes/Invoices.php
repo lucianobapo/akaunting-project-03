@@ -665,7 +665,7 @@ class Invoices extends Controller
             $currency->precision = (int) $currency->precision;
         }
 
-        $html = view('incomes.invoices.item', compact('item_row', 'taxes', 'currency'))->render();
+        $html = view('incomes.invoices.item2', compact('item_row', 'taxes', 'currency'))->render();
 
         return response()->json([
             'success' => true,
