@@ -4,7 +4,7 @@
 
 @section('content')
 
-@if (($invoice->invoice_status_code=='draft') && is_file( public_path('/img/'.$invoice->invoice_status_code.'.jpg') ))
+@if ($invoice->invoice_status_code=='draft')
     <div id="watermark">
         <p>
             @for($i=0;$i<120;$i++)
