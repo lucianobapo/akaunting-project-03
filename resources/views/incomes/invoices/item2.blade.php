@@ -76,7 +76,7 @@
         <div class="form-group col-md-1">
             @stack('total_input_start')
                 @if (empty($item) || !isset($item->total))
-                    <span id="item-total-{{ $item_row }}">0</span>
+                    <span id="item-total-{{ $item_row }}">@money(0,setting('general.default_currency'),true)</span>
                 @else
                     <span id="item-total-{{ $item_row }}">@money($item->total, $invoice->currency_code, true)</span>
                 @endif
