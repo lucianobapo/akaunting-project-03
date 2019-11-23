@@ -336,7 +336,7 @@ class Items extends Controller
                 foreach ($warehouses as $warehouse) {
                     $stock[] = [
                         'name' => $warehouse->warehouse->name,
-                        'stock' => $warehouse->stock(),
+                        'stock' => $warehouse->item->quantity,
                     ];
                 }
             }
