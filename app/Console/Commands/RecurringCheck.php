@@ -63,12 +63,16 @@ class RecurringCheck extends Command
 
             $company->setSettings();
 
-            foreach ($company->recurring as $recurring) {
+            foreach ($company->recurring as $recurring) {                
+
                 foreach ($recurring->schedule() as $recur) {
+
                     $recur_date = Date::parse($recur->getStart()->format('Y-m-d'));
 
-                    // Check if should recur today
-                    if ($this->today->ne($recur_date)) {
+                    $today = Date::parse($this->today->format('Y-m-d'));
+
+                    // Check if should recur today - ne() is not equals
+                    if ($today->ne($recur_date)) {
                         continue;
                     }
 
@@ -77,7 +81,8 @@ class RecurringCheck extends Command
                     if (!$model) {
                         continue;
                     }
-
+                    
+                    $this->line("Starting Recur. Please wait...");
                     switch ($recurring->recurable_type) {
                         case 'App\Models\Expense\Bill':
                             $this->recurBill($company, $model);
