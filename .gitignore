@@ -6,6 +6,8 @@
 /vendor
 /src
 /.idea
+.buildpath
+.project
 /.vagrant
 /.github
 Homestead.json
