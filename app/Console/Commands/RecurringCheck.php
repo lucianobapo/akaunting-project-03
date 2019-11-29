@@ -82,7 +82,6 @@ class RecurringCheck extends Command
                         continue;
                     }
                     
-                    $this->line("Starting Recur. Please wait...");
                     switch ($recurring->recurable_type) {
                         case 'App\Models\Expense\Bill':
                             $this->recurBill($company, $model);
