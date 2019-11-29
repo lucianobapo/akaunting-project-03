@@ -30,9 +30,9 @@ return [
     ],
     'invoice' => [
         'tab'               => 'Faturas',
-        'prefix'            => 'Formato do número',
-        'digit'             => 'Número de dígitos',
-        'next'              => 'Próximo número',
+        'prefix'            => 'Formato do número de Vendas',
+        'digit'             => 'Número de dígitos de Vendas',
+        'next'              => 'Próximo número de Vendas',
         'logo'              => 'Logotipo',
         'custom'            => 'Personalizado',
         'item_name'         => 'Nome do Item',
@@ -44,6 +44,11 @@ return [
         'rate'              => 'Taxa',
         'quantity_name'     => 'Nome da quantidade',
         'quantity'          => 'Quantidade',
+    ],
+    'bill' => [
+        'prefix'            => 'Formato do número de Compras',
+        'digit'             => 'Número de dígitos de Compras',
+        'next'              => 'Próximo número de Compras',
     ],
     'default' => [
         'tab'               => 'Padrões',
