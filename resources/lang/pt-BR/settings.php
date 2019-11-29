@@ -71,13 +71,13 @@ return [
     ],
     'scheduling' => [
         'tab'               => 'Agendamento',
-        'send_invoice'      => 'Enviar lembrete de faturas',
-        'invoice_days'      => 'Enviar após dias de vencimento',
-        'send_bill'         => 'Enviar lembrança',
-        'bill_days'         => 'Enviar antes de vencer',
+        'send_invoice'      => 'Enviar lembrete de Vendas',
+        'invoice_days'      => 'Dias de vencimento das Vendas',
+        'send_bill'         => 'Enviar lembrete de Compras',
+        'bill_days'         => 'Dias de vencimento das Compras',
         'cron_command'      => 'Comando Cron',
         'schedule_time'     => 'Iniciar Cron',
-        'send_item_reminder'=> 'Enviar Lembrete',
+        'send_item_reminder'=> 'Enviar lembrete de Itens',
         'item_stocks'       => 'Enviar quando item possui estoque',
     ],
     'appearance' => [
