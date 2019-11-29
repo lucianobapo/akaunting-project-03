@@ -60,6 +60,7 @@ class InvoiceReminder extends Command
 
             $days = explode(',', $company->schedule_invoice_days);
 
+            
             foreach ($days as $day) {
                 $day = (int) trim($day);
 
