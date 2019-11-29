@@ -72,9 +72,9 @@ return [
     'scheduling' => [
         'tab'               => 'Agendamento',
         'send_invoice'      => 'Enviar lembrete de Vendas',
-        'invoice_days'      => 'Dias de vencimento das Vendas',
+        'invoice_days'      => 'Dias após o vencimento das Vendas',
         'send_bill'         => 'Enviar lembrete de Compras',
-        'bill_days'         => 'Dias de vencimento das Compras',
+        'bill_days'         => 'Dias antes do vencimento das Compras',
         'cron_command'      => 'Comando Cron',
         'schedule_time'     => 'Iniciar Cron',
         'send_item_reminder'=> 'Enviar lembrete de Itens',
