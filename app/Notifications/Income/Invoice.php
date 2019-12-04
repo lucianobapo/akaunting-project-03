@@ -9,9 +9,9 @@ use Date;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Bus\Queueable;
 
-class Invoice extends Notification implements ShouldQueue
+class Invoice extends Notification
 {
-    use DateTime, Queueable;
+    use DateTime;
 
     /**
      * The bill model.

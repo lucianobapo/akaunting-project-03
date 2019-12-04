@@ -6,7 +6,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class ItemReminder extends Notification implements ShouldQueue
+class ItemReminder extends Notification
 {
     /**
      * The item model.
