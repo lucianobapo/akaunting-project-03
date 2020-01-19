@@ -32,6 +32,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        logger('Start Schedule Command...');
         // Not installed yet
         if (!env('APP_INSTALLED')) {
             return;
