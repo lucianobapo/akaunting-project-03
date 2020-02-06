@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8eab8f882932c6446ba08905c6be8d85",
+    "content-hash": "d904a5768070884e4b6cf146e288d6dc",
     "packages": [
         {
             "name": "akaunting/language",
@@ -1842,6 +1842,58 @@
             "time": "2020-01-23T00:14:08+00:00"
         },
         {
+            "name": "ilhanet/erpnet-profiting-milk",
+            "version": "0.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lucianobapo/erpnet-profiting-milk.git",
+                "reference": "b1f0560939cdd83687d18cc91083ffcb6cc7055a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lucianobapo/erpnet-profiting-milk/zipball/b1f0560939cdd83687d18cc91083ffcb6cc7055a",
+                "reference": "b1f0560939cdd83687d18cc91083ffcb6cc7055a",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": ">=5",
+                "php": "^7.1.3"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "ErpNET\\Profiting\\Milk\\Providers\\ErpnetProfitingCalendarServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "ErpNET\\Profiting\\Milk\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "ErpNET\\Profiting\\Milk\\Tests\\": "tests/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Luciano Porto",
+                    "email": "luciano.bapo@gmail.com"
+                }
+            ],
+            "support": {
+                "email": "luciano.bapo@gmail.com",
+                "source": "https://github.com/lucianobapo/erpnet-profiting-milk/tree/master",
+                "issues": "https://github.com/lucianobapo/erpnet-profiting-milk/issues"
+            },
+            "time": "2020-02-06T20:06:27+00:00"
+        },
+        {
             "name": "intervention/image",
             "version": "2.3.14",
             "source": {
@@ -2563,16 +2615,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.63",
+            "version": "1.0.64",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "8132daec326565036bc8e8d1876f77ec183a7bd6"
+                "reference": "d13c43dbd4b791f815215959105a008515d1a2e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/8132daec326565036bc8e8d1876f77ec183a7bd6",
-                "reference": "8132daec326565036bc8e8d1876f77ec183a7bd6",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/d13c43dbd4b791f815215959105a008515d1a2e0",
+                "reference": "d13c43dbd4b791f815215959105a008515d1a2e0",
                 "shasum": ""
             },
             "require": {
@@ -2584,7 +2636,7 @@
             },
             "require-dev": {
                 "phpspec/phpspec": "^3.4",
-                "phpunit/phpunit": "^5.7.10"
+                "phpunit/phpunit": "^5.7.26"
             },
             "suggest": {
                 "ext-fileinfo": "Required for MimeType",
@@ -2643,20 +2695,20 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2020-01-04T16:30:31+00:00"
+            "time": "2020-02-05T18:14:17+00:00"
         },
         {
             "name": "league/fractal",
-            "version": "0.19.1",
+            "version": "0.19.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/fractal.git",
-                "reference": "141c97e870eec480df92eabf2a6f2508dfcb6e9e"
+                "reference": "06dc15f6ba38f2dde2f919d3095d13b571190a7c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/fractal/zipball/141c97e870eec480df92eabf2a6f2508dfcb6e9e",
-                "reference": "141c97e870eec480df92eabf2a6f2508dfcb6e9e",
+                "url": "https://api.github.com/repos/thephpleague/fractal/zipball/06dc15f6ba38f2dde2f919d3095d13b571190a7c",
+                "reference": "06dc15f6ba38f2dde2f919d3095d13b571190a7c",
                 "shasum": ""
             },
             "require": {
@@ -2707,7 +2759,7 @@
                 "league",
                 "rest"
             ],
-            "time": "2020-01-24T13:58:36+00:00"
+            "time": "2020-01-24T23:17:29+00:00"
         },
         {
             "name": "league/url",
@@ -4518,7 +4570,7 @@
         },
         {
             "name": "symfony/css-selector",
-            "version": "v5.0.3",
+            "version": "v5.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
@@ -4627,7 +4679,7 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v4.4.3",
+            "version": "v4.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
@@ -6976,7 +7028,7 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v4.4.3",
+            "version": "v4.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
