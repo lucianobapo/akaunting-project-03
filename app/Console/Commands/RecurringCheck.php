@@ -53,7 +53,7 @@ class RecurringCheck extends Command
         // Get all companies
         $companies = Company::all();
         
-        logger('Start Recurring Command...');
+        debug('Start Recurring Command...');
 
         foreach ($companies as $company) {
             // Set company id
@@ -75,20 +75,20 @@ class RecurringCheck extends Command
 
                     // Check if should recur today - ne() is not equals
                     if ($today->ne($recur_date)) {
-                        logger('Error - Recurring start date is not now');
-                        logger('- Today: '. $today);
-                        logger('- Recurring date: '. $recur_date);
+                        debug('Error - Recurring start date is not now');
+                        debug('- Today: '. $today);
+                        debug('- Recurring date: '. $recur_date);
                         continue;
                     }
 
                     $model = $recurring->recurable;
 
                     if (!$model) {
-                        logger('Error - Recurring has empty model');
+                        debug('Error - Recurring has empty model');
                         continue;
                     }
                     
-                    logger('Running recurring: '. $recurring->recurable_type);
+                    debug('Running recurring: '. $recurring->recurable_type);
                     
                     switch ($recurring->recurable_type) {
                         case 'App\Models\Expense\Bill':
