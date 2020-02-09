@@ -8,7 +8,7 @@ if (!function_exists('dbg')) {
      */
     function dbg($value)
     {
-        if (class_exists('\Barryvdh\Debugbar\LaravelDebugbar')){
+        if (config('app.debug')){
             debug($value);
         } else {
             logger($value);
