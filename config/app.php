@@ -210,8 +210,10 @@ return [
         LynX39\LaraPdfMerger\PdfMergerServiceProvider::class,
         
         ErpNET\Permissions\Providers\ErpnetPermissionsServiceProvider::class,
-
+        
         ErpNET\ProfitingCalendar\Providers\ErpnetProfitingCalendarServiceProvider::class,
+        
+        ErpNET\Profiting\Milk\Providers\ErpnetProfitingMilkServiceProvider::class,
     ],
 
     /*

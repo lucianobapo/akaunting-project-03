@@ -15,12 +15,15 @@ class Versions
     public static function changelog()
     {
         $output = '';
+        
+        if (config('app.env')=='local') return $output;
 
         $url = 'https://api.github.com/repos/akaunting/akaunting/releases';
 
         $http = new \GuzzleHttp\Client(['verify' => false]);
 
-logger('Versions.php: GuzzleHttp\Client ->get() called - '.$url);
+        dbg('Versions.php: GuzzleHttp\Client ->get() called - '.$url);
+        
         $json = $http->get($url, ['timeout' => 30])->getBody()->getContents();
 
         if (empty($json)) {

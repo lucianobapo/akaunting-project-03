@@ -9,10 +9,9 @@ if (!function_exists('dbg')) {
     function dbg($value)
     {
         if (class_exists('\Barryvdh\Debugbar\LaravelDebugbar')){
-            $debugbar = app('debugbar');
-            foreach (func_get_args() as $value) {
-                $debugbar->addMessage($value, 'debug');
-            }
-        }        
+            debug($value);
+        } else {
+            logger($value);
+        }
     }
 }

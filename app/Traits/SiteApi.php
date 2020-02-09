@@ -10,6 +10,8 @@ trait SiteApi
 
     protected static function getRemote($url, $data = array())
     {
+        if (config('app.env')=='local') return;
+        
         $base = 'https://akaunting.com/api/';
 
         $client = new Client(['verify' => false, 'base_uri' => $base]);
@@ -27,7 +29,7 @@ trait SiteApi
         $data = array_merge($data, $headers);
 
         try {
-            logger('SiteApi.php: GuzzleHttp\Client ->get() called - '.$url);
+            dbg('SiteApi.php: GuzzleHttp\Client ->get() called - '.$url);
             $result = $client->get($url, $data);
         } catch (RequestException $e) {
             $result = $e;
