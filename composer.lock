@@ -1847,12 +1847,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/lucianobapo/erpnet-profiting-milk.git",
-                "reference": "22d84520c24dc66ab8ffbfefd8ab922b3ec79f8f"
+                "reference": "491d42fa9c402f2d826aed17b99d6cc232bf0518"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lucianobapo/erpnet-profiting-milk/zipball/22d84520c24dc66ab8ffbfefd8ab922b3ec79f8f",
-                "reference": "22d84520c24dc66ab8ffbfefd8ab922b3ec79f8f",
+                "url": "https://api.github.com/repos/lucianobapo/erpnet-profiting-milk/zipball/491d42fa9c402f2d826aed17b99d6cc232bf0518",
+                "reference": "491d42fa9c402f2d826aed17b99d6cc232bf0518",
                 "shasum": ""
             },
             "require": {
@@ -1892,7 +1892,7 @@
                 "source": "https://github.com/lucianobapo/erpnet-profiting-milk/tree/master",
                 "issues": "https://github.com/lucianobapo/erpnet-profiting-milk/issues"
             },
-            "time": "2020-02-09T21:28:39+00:00"
+            "time": "2020-02-09T21:46:16+00:00"
         },
         {
             "name": "intervention/image",
