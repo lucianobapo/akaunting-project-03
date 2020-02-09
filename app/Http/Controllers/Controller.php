@@ -27,7 +27,6 @@ class Controller extends BaseController
 
         // Get the controller array
         $arr = array_reverse(explode('\\', explode('@', $route->getAction()['uses'])[0]));
-        logger($arr);
 
         $controller = '';
 
@@ -35,7 +34,7 @@ class Controller extends BaseController
         if (strtolower($arr[1]) != 'controllers') {
             $controller .= kebab_case($arr[1]) . '-';
         }
-        logger($controller);
+        
         // Add module
         if (isset($arr[3]) && isset($arr[4]) && (strtolower($arr[4]) == 'modules')) {
             $controller .= kebab_case($arr[3]) . '-';
@@ -49,7 +48,7 @@ class Controller extends BaseController
         if (in_array($controller, $skip)) {
             return;
         }
-        logger($controller);
+        
         // Add CRUD permission check
         $this->middleware('permission:create-' . $controller)->only(['create', 'store', 'duplicate', 'import']);
         $this->middleware('permission:read-' . $controller)->only(['index', 'show', 'edit', 'export']);
