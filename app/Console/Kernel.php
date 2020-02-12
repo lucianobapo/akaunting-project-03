@@ -32,7 +32,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        dbg('Start Schedule Command...');
         // Not installed yet
         if (!env('APP_INSTALLED')) {
             return;
