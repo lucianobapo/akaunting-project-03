@@ -144,4 +144,6 @@ return [
         'this_month' => 'Este mês',
         'last_month' => 'Mês Passado',
     ],
+    
+    'quantity'              => 'Quantidade',
 ];
