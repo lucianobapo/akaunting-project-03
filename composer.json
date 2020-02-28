@@ -52,7 +52,7 @@
 		"tucker-eric/eloquentfilter" : "1.1.*",
 		"daltcore/lara-pdf-merger" : "^2.0",
 		"predis/predis" : "^1.1",
-		"ilhanet/erpnet-profiting-calendar" : "0.0.1",
+		"ilhanet/erpnet-profiting-calendar" : "dev-master",
 		
 		"ilhanet/erpnet-profiting-milk" : "dev-master",
 		"ilhanet/erpnet-permissions" : "1.0.1"

@@ -21,6 +21,7 @@ class Categories extends Controller
         $transfer_id = Category::transfer();
 
         $types = collect([
+            'custom1' => 'Tanques de Leite',
             'expense' => trans_choice('general.expenses', 1),
             'income' => trans_choice('general.incomes', 1),
             'item' => trans_choice('general.items', 1),
