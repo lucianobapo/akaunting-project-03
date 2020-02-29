@@ -69,4 +69,9 @@ class Category extends Model
     {
         return $query->where('type', 'other')->pluck('id')->first();
     }
+    
+    public static function getTypesCollect()
+    {
+        return collect(config('profiting.category_types'));
+    }
 }
