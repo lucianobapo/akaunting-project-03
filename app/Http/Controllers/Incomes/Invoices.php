@@ -42,8 +42,6 @@ use Image;
 use Storage;
 use SignedUrl;
 
-use LynX39\LaraPdfMerger\Facades\PdfMerger;
-
 class Invoices extends Controller
 {
     use DateTime, Currencies, Incomes, Uploads;
@@ -720,7 +718,7 @@ class Invoices extends Controller
 
         $pdf->save($invoice_pdf_file);
 
-        $pdfMerger = PDFMerger::init();
+        $pdfMerger = new \PDFMerger;
 
         $pdfMerger->addPDF($invoice_pdf_file, 'all');
 

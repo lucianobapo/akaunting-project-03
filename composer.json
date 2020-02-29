@@ -50,12 +50,12 @@
 		"sofa/eloquence" : "5.4.*",
 		"nesbot/carbon" : "1.22.*",
 		"tucker-eric/eloquentfilter" : "1.1.*",
-		"daltcore/lara-pdf-merger" : "^2.0",
 		"predis/predis" : "^1.1",
 		"ilhanet/erpnet-profiting-calendar" : "dev-master",
 		
 		"ilhanet/erpnet-profiting-milk" : "dev-master",
-		"ilhanet/erpnet-permissions" : "1.0.1"
+		"ilhanet/erpnet-permissions" : "1.0.1",
+		"rguedes/pdfmerger": "^1.0"
 	},
 	"require-dev" : {
 		"fzaninotto/faker" : "1.8.*",

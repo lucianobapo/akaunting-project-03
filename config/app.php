@@ -206,8 +206,6 @@ return [
         Nwidart\Modules\LaravelModulesServiceProvider::class,
         Sofa\Eloquence\ServiceProvider::class,
         Plank\Mediable\MediableServiceProvider::class,
-
-        LynX39\LaraPdfMerger\PdfMergerServiceProvider::class,
         
         ErpNET\Permissions\Providers\ErpnetPermissionsServiceProvider::class,
                 
