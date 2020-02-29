@@ -372,6 +372,9 @@ class Invoices extends Controller
 
         // Notify the customer
         $invoice->customer->notify(new Notification($invoice));
+        
+        // Notify loggued user assigned to this company
+        auth()->user()->notify(new Notification($invoice));
 
         // Delete temp file
         File::delete($invoice->pdf_path); 
