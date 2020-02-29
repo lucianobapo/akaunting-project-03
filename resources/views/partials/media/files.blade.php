@@ -33,7 +33,7 @@ $options = !empty($options) ? $options : false;
                 'url' => [url('uploads/' . $file->id)],
                 'style' => 'display:inline'
             ]) !!}
-                <a href="javascript:void();" id="remove-attachment" class="btn btn-danger btn-xs pull-right mailbox-attachment-remove">
+                <a href="javascript:void();" id="remove-attachment-{{ $file->id }}" class="btn btn-danger btn-xs pull-right mailbox-attachment-remove">
                     <i class="fa fa fa-times"></i>
                 </a>
 
