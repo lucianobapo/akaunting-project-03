@@ -723,12 +723,11 @@ class Invoices extends Controller
         $pdfMerger->addPDF($invoice_pdf_file, 'all');
 
         if($invoice->attachments)
-            dd($invoice->attachments);
             foreach ($invoice->attachments as $attachment) {
                 if ($attachment->extension=='pdf') {
                     $local_full_path = Storage::disk($attachment->disk)->path($attachment->directory.DIRECTORY_SEPARATOR.$attachment->filename.'.'.$attachment->extension);
-                    
-                    $pdfMerger->addPDF($local_full_path, 'all');  
+                    if(file_exists($local_full_path))
+                        $pdfMerger->addPDF($local_full_path, 'all');  
                 }             
             }
 
