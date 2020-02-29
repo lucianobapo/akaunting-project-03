@@ -207,6 +207,7 @@ return [
         Sofa\Eloquence\ServiceProvider::class,
         Plank\Mediable\MediableServiceProvider::class,
         
+        
         ErpNET\Permissions\Providers\ErpnetPermissionsServiceProvider::class,
                 
         ErpNET\Profiting\Milk\Providers\ErpnetProfitingMilkServiceProvider::class,
@@ -280,8 +281,7 @@ return [
         'Setting' => Akaunting\Setting\Facade::class,
         'SignedUrl' => Akaunting\SignedUrl\Facade::class,
         'Version' => Akaunting\Version\Facade::class,
-
-'PdfMerger' => LynX39\LaraPdfMerger\Facades\PdfMerger::class,
+        
     ],
 
 ];
