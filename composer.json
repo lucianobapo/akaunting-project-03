@@ -55,7 +55,7 @@
 		
 		"ilhanet/erpnet-profiting-milk" : "dev-master",
 		"ilhanet/erpnet-permissions" : "1.0.1",
-		"rguedes/pdfmerger": "^1.0"
+		"daltcore/lara-pdf-merger": "^2.0"
 	},
 	"require-dev" : {
 		"fzaninotto/faker" : "1.8.*",
