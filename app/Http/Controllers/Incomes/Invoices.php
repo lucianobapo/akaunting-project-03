@@ -720,6 +720,7 @@ class Invoices extends Controller
 
         $pdfMerger = new \PDFMerger;
 
+        dd($invoice_pdf_file);
         $pdfMerger->addPDF($invoice_pdf_file, 'all');
 
         if($invoice->attachments)
